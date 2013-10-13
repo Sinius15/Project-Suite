@@ -1,1 +1,0 @@
-var LatestVersion = "a0.0"
