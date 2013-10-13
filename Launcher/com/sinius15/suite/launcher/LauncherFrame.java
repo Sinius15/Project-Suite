@@ -23,6 +23,11 @@ public class LauncherFrame extends JFrame {
 
 	public static void main(String[] args) {
 		Data.launcherFrame.setVisible(true);
+		try {
+			Data.loadData();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public LauncherFrame() {
