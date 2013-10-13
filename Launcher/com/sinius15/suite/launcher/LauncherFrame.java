@@ -16,19 +16,12 @@ public class LauncherFrame extends JFrame {
 
 	private static final long serialVersionUID = -9026214061969231008L;
 	private JPanel contentPane;
-	private JTextField txtUsername;
-	private JPasswordField passwordField;
+	JTextField txtUsername;
+	JPasswordField passwordField;
 	private boolean passwordFieldHadFocus = false;
+	private boolean textFieldHadFocus = false;
 	private JButton btnOptions;
 
-	public static void main(String[] args) {
-		Data.launcherFrame.setVisible(true);
-		try {
-			Data.loadData();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	public LauncherFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,12 +32,36 @@ public class LauncherFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnPlay = new JButton("Play");
+		btnPlay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(Data.launcherFrame.txtUsername.getText().equals("") || new String(Data.launcherFrame.passwordField.getPassword()).equals(""))
+					return;
+				if(Data.saveUser){
+					Data.username = Data.launcherFrame.txtUsername.getText();
+					Data.password = new String(Data.launcherFrame.passwordField.getPassword());
+				}
+				try {
+					Data.saveData();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnPlay.setBounds(581, 361, 89, 51);
 		contentPane.add(btnPlay);
 		
 		txtUsername = new JTextField();
 		txtUsername.setText("Username");
 		txtUsername.setBounds(425, 361, 146, 20);
+		txtUsername.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if(textFieldHadFocus)
+					return;
+				txtUsername.setText("");
+				textFieldHadFocus = true;
+			}
+		});
 		contentPane.add(txtUsername);
 		txtUsername.setColumns(10);
 		

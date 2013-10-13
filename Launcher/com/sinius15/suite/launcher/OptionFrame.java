@@ -25,6 +25,7 @@ public class OptionFrame extends JFrame {
 	private JComboBox<String> LauncherVisability;
 	private JComboBox<String> Version;
 	private JButton browse;
+	private JCheckBox UserCrd;
 
 	public OptionFrame() {
 		setResizable(false);
@@ -39,7 +40,7 @@ public class OptionFrame extends JFrame {
 				Data.launcherFrame.requestFocus();
 			}
 		});
-		setBounds(100, 100, 454, 180);
+		setBounds(100, 100, 498, 217);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -59,7 +60,7 @@ public class OptionFrame extends JFrame {
 				Data.launcherFrame.requestFocus();
 			}
 		});
-		btnSave.setBounds(313, 120, 123, 23);
+		btnSave.setBounds(354, 154, 123, 23);
 		contentPane.add(btnSave);
 		
 		JButton btnDiscard = new JButton("Cancel");
@@ -70,11 +71,11 @@ public class OptionFrame extends JFrame {
 				Data.launcherFrame.requestFocus();
 			}
 		});
-		btnDiscard.setBounds(191, 120, 112, 23);
+		btnDiscard.setBounds(230, 154, 112, 23);
 		contentPane.add(btnDiscard);
 		
 		pathField = new JTextField();
-		pathField.setBounds(150, 9, 248, 20);
+		pathField.setBounds(191, 69, 248, 20);
 		contentPane.add(pathField);
 		pathField.setColumns(10);
 		
@@ -92,7 +93,7 @@ public class OptionFrame extends JFrame {
 				pathField.setText(path);
 			}
 		});
-		browse.setBounds(410, 8, 26, 23);
+		browse.setBounds(451, 68, 26, 23);
 		contentPane.add(browse);
 		
 		defaultDataFolder = new JCheckBox("Default data folder");
@@ -102,30 +103,34 @@ public class OptionFrame extends JFrame {
 					browse.setEnabled(!defaultDataFolder.isSelected());
 			}
 		});
-		defaultDataFolder.setBounds(10, 7, 132, 23);
+		defaultDataFolder.setBounds(10, 68, 132, 23);
 		contentPane.add(defaultDataFolder);
 		
 		Version = new JComboBox<String>();
 		Version.setModel(new DefaultComboBoxModel<String>(new String[] {"Latest"}));
-		Version.setBounds(150, 35, 286, 20);
+		Version.setBounds(191, 12, 286, 20);
 		contentPane.add(Version);
 		
 		LauncherVisability = new JComboBox<String>();
 		LauncherVisability.setModel(new DefaultComboBoxModel<String>(new String[] {"Close launcher when game starts", "Hide launcher and re-open when game closes", "Keep the launcher open"}));
-		LauncherVisability.setBounds(150, 61, 286, 20);
+		LauncherVisability.setBounds(191, 40, 286, 20);
 		contentPane.add(LauncherVisability);
 		
 		JLabel lblVersion = new JLabel("  Version");
-		lblVersion.setBounds(10, 37, 112, 18);
+		lblVersion.setBounds(10, 13, 112, 18);
 		contentPane.add(lblVersion);
 		
 		JLabel lblLauncherVisability = new JLabel("  Launcher Visability");
-		lblLauncherVisability.setBounds(10, 62, 128, 18);
+		lblLauncherVisability.setBounds(10, 41, 128, 18);
 		contentPane.add(lblLauncherVisability);
 		
 		AutoUpdate = new JCheckBox("Auto Update");
-		AutoUpdate.setBounds(10, 89, 112, 24);
+		AutoUpdate.setBounds(10, 123, 112, 24);
 		contentPane.add(AutoUpdate);
+		
+		UserCrd = new JCheckBox("Save User Credentials");
+		UserCrd.setBounds(10, 95, 163, 24);
+		contentPane.add(UserCrd);
 		
 		
 		
@@ -140,10 +145,9 @@ public class OptionFrame extends JFrame {
 		if(!Data.defaultDataFolder)
 			if(Data.dataFolder.equals("default")) pathField.setText("");
 			else pathField.setText(Data.dataFolder);
-			
-		
 		
 		LauncherVisability.setSelectedIndex(Data.launcherVis);
+		UserCrd.setSelected(Data.saveUser);
 		
 		this.revalidate();
 	}
@@ -156,5 +160,6 @@ public class OptionFrame extends JFrame {
 		
 		Data.launcherVis = LauncherVisability.getSelectedIndex();
 		
+		Data.saveUser = UserCrd.isSelected();
 	}
 }
