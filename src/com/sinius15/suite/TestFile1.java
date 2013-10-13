@@ -10,6 +10,6 @@ public class TestFile1 {
 	
 	//*dog gets no respons...
 	
-	//this is the last test  (sinius)
+	//But cat speaks clearly
 	
 }
