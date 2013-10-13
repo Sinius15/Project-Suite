@@ -1,13 +1,13 @@
 package com.sinius15.suite.launcher;
 
 import java.io.File;
-import java.io.IOException;
 
 import com.sinius15.suite.util.YAMLFile;
 
 public class Data {
 	
 	public static final File DEFAULT_DATA_FOLDER = new File(System.getenv("APPDATA") + "\\Suite");
+	
 
 	public static final int LAUNCHVIS_CLOSE = 0;
 	public static final int LAUNCHVIS_REOPEN = 1;
@@ -23,14 +23,14 @@ public class Data {
 	public static LauncherFrame launcherFrame = new LauncherFrame();
 	
 	
-	public static void loadData() throws IOException, Exception{
+	public static void loadData() throws Exception{
 		File file = new File(DEFAULT_DATA_FOLDER.getPath() + "\\launcherOptions.yml");
 		if(!file.exists()){
 			DEFAULT_DATA_FOLDER.mkdirs();
 			file.createNewFile();
 			YAMLFile creator = new YAMLFile(true);
 			
-			creator.addboolean("defautlDataFolder", true);
+			creator.addboolean("defaultDataFolder", true);
 			creator.addString("dataFolder", "default");
 			creator.addboolean("autoUpdate", true);
 			creator.addString("version", "latest");
@@ -43,13 +43,23 @@ public class Data {
 		dataFile.Load(file);
 		
 		
-		defaultDataFolder = dataFile.getboolean("defautlDataFolder");
+		defaultDataFolder = dataFile.getboolean("defaultDataFolder");
 		dataFolder = dataFile.getString("dataFolder");
 		autoUpdate = dataFile.getboolean("autoUpdate");
 		version = dataFile.getString("version");
 		launcherVis = dataFile.getInt("launcherVisability");
+	}
+	
+	public static void saveData() throws Exception{
+		File file = new File(DEFAULT_DATA_FOLDER.getPath() + "\\launcherOptions.yml");
+		YAMLFile dataFile = new YAMLFile(true);
 		
+		dataFile.addboolean("defaultDataFolder", Data.defaultDataFolder);
+		dataFile.addString("dataFolder", Data.dataFolder);
+		dataFile.addboolean("autoUpdate", Data.autoUpdate);
+		dataFile.addString("version", Data.version);
+		dataFile.addInt("launcherVisability", Data.launcherVis);
 		
-		
+		dataFile.Save(file);
 	}
 }

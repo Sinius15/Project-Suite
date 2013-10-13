@@ -20,7 +20,11 @@ public class OptionFrame extends JFrame {
 
 	private static final long serialVersionUID = 8733682719392396550L;
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField pathField;
+	private JCheckBox AutoUpdate, defaultDataFolder;
+	private JComboBox<String> LauncherVisability;
+	private JComboBox<String> Version;
+	private JButton browse;
 
 	public OptionFrame() {
 		setResizable(false);
@@ -42,20 +46,40 @@ public class OptionFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateValuesToData();
+				try {
+					Data.saveData();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				Data.launcherFrame.setEnabled(true);
+				Data.optionFrame.setVisible(false);
+				Data.launcherFrame.requestFocus();
+			}
+		});
 		btnSave.setBounds(313, 120, 123, 23);
 		contentPane.add(btnSave);
 		
 		JButton btnDiscard = new JButton("Cancel");
+		btnDiscard.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Data.launcherFrame.setEnabled(true);
+				Data.optionFrame.setVisible(false);
+				Data.launcherFrame.requestFocus();
+			}
+		});
 		btnDiscard.setBounds(191, 120, 112, 23);
 		contentPane.add(btnDiscard);
 		
-		textField = new JTextField();
-		textField.setBounds(150, 9, 248, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		pathField = new JTextField();
+		pathField.setBounds(150, 9, 248, 20);
+		contentPane.add(pathField);
+		pathField.setColumns(10);
 		
-		final JButton button = new JButton("...");
-		button.addActionListener(new ActionListener() {
+		browse = new JButton("...");
+		browse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser filechooser = new JFileChooser();
 				filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -65,31 +89,31 @@ public class OptionFrame extends JFrame {
 				if(returnErrorNR != 0)
 					return;
 				String path = filechooser.getSelectedFile().getAbsolutePath();
-				textField.setText(path);
+				pathField.setText(path);
 			}
 		});
-		button.setBounds(410, 8, 26, 23);
-		contentPane.add(button);
+		browse.setBounds(410, 8, 26, 23);
+		contentPane.add(browse);
 		
-		final JCheckBox chckbxDefaultDataFolder = new JCheckBox("Default data folder");
-		chckbxDefaultDataFolder.addActionListener(new ActionListener() {
+		defaultDataFolder = new JCheckBox("Default data folder");
+		defaultDataFolder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					textField.setEditable(!chckbxDefaultDataFolder.isSelected());
-					button.setEnabled(!chckbxDefaultDataFolder.isSelected());
+					pathField.setEditable(!defaultDataFolder.isSelected());
+					browse.setEnabled(!defaultDataFolder.isSelected());
 			}
 		});
-		chckbxDefaultDataFolder.setBounds(10, 7, 132, 23);
-		contentPane.add(chckbxDefaultDataFolder);
+		defaultDataFolder.setBounds(10, 7, 132, 23);
+		contentPane.add(defaultDataFolder);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Latest"}));
-		comboBox.setBounds(150, 35, 286, 20);
-		contentPane.add(comboBox);
+		Version = new JComboBox<String>();
+		Version.setModel(new DefaultComboBoxModel<String>(new String[] {"Latest"}));
+		Version.setBounds(150, 35, 286, 20);
+		contentPane.add(Version);
 		
-		JComboBox<String> comboBox_1 = new JComboBox<String>();
-		comboBox_1.setModel(new DefaultComboBoxModel<String>(new String[] {"Close launcher whe game starts", "Hide launcher and re-open when game closes", "Keep the launcher open"}));
-		comboBox_1.setBounds(150, 61, 286, 20);
-		contentPane.add(comboBox_1);
+		LauncherVisability = new JComboBox<String>();
+		LauncherVisability.setModel(new DefaultComboBoxModel<String>(new String[] {"Close launcher when game starts", "Hide launcher and re-open when game closes", "Keep the launcher open"}));
+		LauncherVisability.setBounds(150, 61, 286, 20);
+		contentPane.add(LauncherVisability);
 		
 		JLabel lblVersion = new JLabel("  Version");
 		lblVersion.setBounds(10, 37, 112, 18);
@@ -99,8 +123,38 @@ public class OptionFrame extends JFrame {
 		lblLauncherVisability.setBounds(10, 62, 128, 18);
 		contentPane.add(lblLauncherVisability);
 		
-		JCheckBox chckbxAutoUpdate = new JCheckBox("Auto Update");
-		chckbxAutoUpdate.setBounds(10, 89, 112, 24);
-		contentPane.add(chckbxAutoUpdate);
+		AutoUpdate = new JCheckBox("Auto Update");
+		AutoUpdate.setBounds(10, 89, 112, 24);
+		contentPane.add(AutoUpdate);
+		
+		
+		
+	}
+	
+	public void updateValuesFromData(){
+		AutoUpdate.setSelected(Data.autoUpdate);
+		
+		defaultDataFolder.setSelected(Data.defaultDataFolder);
+		pathField.setEditable(!defaultDataFolder.isSelected());
+		browse.setEnabled(!defaultDataFolder.isSelected());
+		if(!Data.defaultDataFolder)
+			if(Data.dataFolder.equals("default")) pathField.setText("");
+			else pathField.setText(Data.dataFolder);
+			
+		
+		
+		LauncherVisability.setSelectedIndex(Data.launcherVis);
+		
+		this.revalidate();
+	}
+	
+	public void updateValuesToData(){
+		Data.autoUpdate = AutoUpdate.isSelected();
+		
+		Data.defaultDataFolder = defaultDataFolder.isSelected();
+		Data.dataFolder = pathField.getText();
+		
+		Data.launcherVis = LauncherVisability.getSelectedIndex();
+		
 	}
 }

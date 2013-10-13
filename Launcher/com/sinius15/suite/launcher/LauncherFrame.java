@@ -67,6 +67,7 @@ public class LauncherFrame extends JFrame {
 		btnOptions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Data.optionFrame.setVisible(true);
+				Data.optionFrame.updateValuesFromData();
 				Data.launcherFrame.setEnabled(false);
 			}
 		});

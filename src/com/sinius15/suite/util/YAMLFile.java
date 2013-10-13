@@ -251,25 +251,17 @@ public class YAMLFile {
 	
 	public Boolean getboolean(String path){
 		String s;
-		if((s = data.get(path)) == null){
+		if((s = data.get(path)) == null)
 			return null;
-		}else{
-			boolean b;
-			try{
-				b = Boolean.valueOf(s);
-				if(!s.equals("true") || !s.equals("false")){
-					if(showError)
-						System.err.println("YAML ERROR: You asked for a boolean, but there was an other object(like a string) stored.  path: " + path);
-					return null;
-				}
-			}catch(Exception e){
-				if(showError)
-					System.err.println("YAML ERROR: You asked for a boolean, but there was an other object(like a string) stored.  path: " + path);
-				return null;
-			}
-			return b;
+		if(s.equals("true"))
+			return true;
+		if(s.equals("false"))
+			return false;
+		if(showError)
+			System.err.println("YAML ERROR: You asked for a boolean, but there was an other object(like a string) stored.  path: " + path);
+		return null;
 			
-		}
+		
 	}
 	
 }
