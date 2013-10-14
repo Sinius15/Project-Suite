@@ -1,6 +1,6 @@
 package com.sinius15.suite.launcher;
 
-import java.awt.Font;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -11,8 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
 public class LauncherFrame extends JFrame {
@@ -44,6 +44,7 @@ public class LauncherFrame extends JFrame {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
+				Launcher.launchGame();
 			}
 		});
 		btnPlay.setBounds(581, 361, 89, 51);
@@ -94,9 +95,14 @@ public class LauncherFrame extends JFrame {
 		scrollPane.setBounds(10, 11, 660, 339);
 		contentPane.add(scrollPane);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
-		scrollPane.setViewportView(textArea);
-		textArea.setFont(new Font("Arial", Font.PLAIN, 12));
+		JTextPane console = new JTextPane();
+		scrollPane.setViewportView(console);
+		
+		MessageConsole mc = new MessageConsole(console);
+		mc.redirectOut();
+		mc.redirectErr(Color.RED, null);
+		
+		
+		
 	}
 }

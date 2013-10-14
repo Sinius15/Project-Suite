@@ -4,19 +4,20 @@ import java.io.File;
 
 public class Lib {
 
-	public static File MAIN;
-	public static File SAVES;
-	public static File RESOURCE;
+	public static File FOLDER_MAIN;
+	public static File FOLDER_SAVES;
+	public static File FOLDER_RESOURCE;
 	
-	public static void init(String folderArg){
-		if(folderArg.equals("default"))
-			MAIN = new File(System.getenv("APPDATA") + "\\Suite");
-		else
-			MAIN = new File(folderArg);
+	public static int SCREEN_WIDTH, SCREEN_HEIGHT;
+	
+	public static void init(String folderArg, int screenW, int screenH){
+		FOLDER_MAIN = new File(folderArg);
 		
-		SAVES = new File(MAIN.getPath() + "\\saves");
-		RESOURCE = new File(MAIN.getPath() + "\\resource");
+		FOLDER_SAVES = new File(FOLDER_MAIN.getPath() + "\\saves");
+		FOLDER_RESOURCE = new File(FOLDER_MAIN.getPath() + "\\resource");
 		
+		SCREEN_HEIGHT = screenH;
+		SCREEN_WIDTH = screenW;
 	}
 	
 }

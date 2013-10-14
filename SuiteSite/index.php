@@ -19,18 +19,7 @@
             };
         }
 
-        var suite = {};
-
-        suite.latestVersion = "a0.0"
-
-
         var param = window.location.search.replace("?", "");
-        //if (param === "latestVersion")
-        //    document.write(suite.latestVersion);
-        //if (param.endsWith(".zip"))
-        //    document.write('<a href="' + param + '"></a>');
-        //else
-        //    document.write("invalid requist");
         if (param === "")
             document.write('<p>This is the page of "Project Suite".</p> <p>In this project davidot and sinius15 have bundeled their capabilitys to make an awsome game.</p>');
         
@@ -50,7 +39,7 @@
             $outputText = "";
             for($index=0; $index < $indexCount; $index++) {
                 $name=$dirArray[$index];
-                if(substr_compare($name, ".jar", -4, 4) === 0 && $name !== "" && $name !== ".")
+                if(substr_compare($name, ".zip", -4, 4) === 0 && $name !== "" && $name !== ".")
                     if($outputText === "")
                         $outputText = $name;
                     else
@@ -69,8 +58,8 @@
             $outputText = "";
             for($index=0; $index < $indexCount; $index++) {
                 $name=$dirArray[$index];
-                if(substr_compare($name, ".jar", -4, 4) === 0 && $name !== "" && $name !== ".")
-                    $outputText = str_replace(".jar", "", $name, $count);
+                if(substr_compare($name, ".zip", -4, 4) === 0 && $name !== "" && $name !== ".")
+                    $outputText = str_replace(".zip", "", $name, $count);
             }
             echo("$outputText");
         }

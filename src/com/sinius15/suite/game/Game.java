@@ -84,10 +84,7 @@ public class Game extends Canvas implements Runnable{
 
 	public static void main(String[] args) {
 		ArgumentsReader argReader = new ArgumentsReader(args);
-		if(argReader.getValue("dataFolder") == null)
-			Lib.init("default");
-		else
-			Lib.init(argReader.getValue("dataFolder"));
+			Lib.init(argReader.getValue("dataFolder"), Integer.parseInt(argReader.getValue("screenW")), Integer.parseInt(argReader.getValue("screenH")));
 		
 		Game game = new Game();
 		game.setMinimumSize(new Dimension(WIDTH, HEIGHT));

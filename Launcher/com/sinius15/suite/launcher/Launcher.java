@@ -18,10 +18,21 @@ public class Launcher {
 	}
 	
 	public static void launchGame(){
-		
-		
-		
+		System.out.println(getArguments());
 	}
 	
+	public static String getArguments(){
+		String args = 
+				"screenW=>" + OptionManager.getValue("screenWidth") + 
+				" screenH=>" + OptionManager.getValue("screenHeight");
+		
+		if((Boolean)OptionManager.getValue("defaultDataFolder"))
+			args = args + " \"dataFolder=>" + Data.DEFAULT_DATA_FOLDER.getAbsolutePath() + "\"";
+		else
+			args = args + " \"dataFolder=>" + (String) OptionManager.getValue("dataFolder") + "\"";
+		
+		System.out.println("the game arguments are: " + args);
+		return args;
+	}
 	
 }

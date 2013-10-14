@@ -22,8 +22,14 @@ public class Data {
 		
 		p1 = new Option<Boolean>(Boolean.class, true, "defaultDataFolder", new Option.Update<Boolean>() {@Override public void run() {
 			p1.value = optionFrame.defaultDataFolder.isSelected();
+			if((boolean) p1.value)
+				optionFrame.pathField.setText("default");
 		}}, new Option.Update<Boolean>() {@Override public void run() {
 			optionFrame.defaultDataFolder.setSelected((boolean) p1.value);
+			optionFrame.pathField.setEditable(!((boolean) p1.value));
+			optionFrame.browse.setEnabled(!((boolean) p1.value));
+			if((boolean) p1.value)
+				optionFrame.pathField.setText("default");
 		}});
 		
 		OptionManager.addOption(p1);
