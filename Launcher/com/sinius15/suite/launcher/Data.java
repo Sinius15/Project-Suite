@@ -24,6 +24,14 @@ public class Data {
 	public static OptionFrame optionFrame = new OptionFrame();
 	public static LauncherFrame launcherFrame = new LauncherFrame();
 	
+	public static void initOptions(){
+		OptionManager.addOption(new Option<Boolean>(Boolean.class, true, "defaultDataFolder", new Option.Update<Boolean>() {@Override public void run(Boolean value) {
+			value = optionFrame.AutoUpdate.isSelected();
+		}}));
+		
+		
+		
+	}
 	
 	public static void loadData() throws Exception{
 		File file = new File(DEFAULT_DATA_FOLDER.getPath() + "\\launcherOptions.yml");

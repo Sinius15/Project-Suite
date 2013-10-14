@@ -21,11 +21,14 @@ public class OptionFrame extends JFrame {
 	private static final long serialVersionUID = 8733682719392396550L;
 	private JPanel contentPane;
 	private JTextField pathField;
-	private JCheckBox AutoUpdate, defaultDataFolder;
+	JCheckBox AutoUpdate;
+	private JCheckBox defaultDataFolder;
 	private JComboBox<String> LauncherVisability;
 	private JComboBox<String> Version;
 	private JButton browse;
 	private JCheckBox UserCrd;
+	private JTextField heidhtField;
+	private JTextField widthField;
 
 	public OptionFrame() {
 		setResizable(false);
@@ -40,7 +43,7 @@ public class OptionFrame extends JFrame {
 				Data.launcherFrame.requestFocus();
 			}
 		});
-		setBounds(100, 100, 498, 217);
+		setBounds(100, 100, 498, 242);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -60,7 +63,7 @@ public class OptionFrame extends JFrame {
 				Data.launcherFrame.requestFocus();
 			}
 		});
-		btnSave.setBounds(354, 154, 123, 23);
+		btnSave.setBounds(354, 179, 123, 23);
 		contentPane.add(btnSave);
 		
 		JButton btnDiscard = new JButton("Cancel");
@@ -71,7 +74,7 @@ public class OptionFrame extends JFrame {
 				Data.launcherFrame.requestFocus();
 			}
 		});
-		btnDiscard.setBounds(230, 154, 112, 23);
+		btnDiscard.setBounds(233, 179, 112, 23);
 		contentPane.add(btnDiscard);
 		
 		pathField = new JTextField();
@@ -125,12 +128,36 @@ public class OptionFrame extends JFrame {
 		contentPane.add(lblLauncherVisability);
 		
 		AutoUpdate = new JCheckBox("Auto Update");
-		AutoUpdate.setBounds(10, 123, 112, 24);
+		AutoUpdate.setBounds(10, 155, 112, 24);
 		contentPane.add(AutoUpdate);
 		
 		UserCrd = new JCheckBox("Save User Credentials");
-		UserCrd.setBounds(10, 95, 163, 24);
+		UserCrd.setBounds(10, 127, 163, 24);
 		contentPane.add(UserCrd);
+		
+		heidhtField = new JTextField();
+		heidhtField.setText("360");
+		heidhtField.setBounds(363, 101, 114, 20);
+		contentPane.add(heidhtField);
+		heidhtField.setColumns(10);
+		
+		widthField = new JTextField();
+		widthField.setText("720");
+		widthField.setColumns(10);
+		widthField.setBounds(191, 101, 114, 20);
+		contentPane.add(widthField);
+		
+		JLabel lblScreenSize = new JLabel("  Screen size");
+		lblScreenSize.setBounds(10, 103, 77, 16);
+		contentPane.add(lblScreenSize);
+		
+		JLabel lblWidht = new JLabel("Widht");
+		lblWidht.setBounds(152, 101, 77, 16);
+		contentPane.add(lblWidht);
+		
+		JLabel lblHeight = new JLabel("Height");
+		lblHeight.setBounds(320, 103, 77, 16);
+		contentPane.add(lblHeight);
 		
 		
 		
