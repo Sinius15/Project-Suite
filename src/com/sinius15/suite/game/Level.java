@@ -1,6 +1,7 @@
 package com.sinius15.suite.game;
 
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 
 public class Level {
 
@@ -17,6 +18,10 @@ public class Level {
 	public void tick() {
 		if(true)
 			return;
+	}
+	
+	public BufferedImage render() {
+		return null;
 	}
 	
 }

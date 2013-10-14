@@ -5,6 +5,8 @@ import java.awt.Image;
 public class StraightRail extends Rail {
 
 	public int strenght;
+	public Direction direction1;
+	public Direction direction2;
 	
 	public StraightRail(byte id,int str) {
 		super(id);
@@ -28,7 +30,6 @@ public class StraightRail extends Rail {
 
 	@Override
 	public void tick() {
-		// FIXME Auto-generated method stub
 
 	}
 
