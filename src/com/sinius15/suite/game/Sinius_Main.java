@@ -10,9 +10,9 @@ public class Sinius_Main {
 	public void Main(String[] args){
 		ArgumentsReader argReader = new ArgumentsReader(args);
 		if(argReader.getValue("dataFolder") == null)
-			Lib.initFiles("default");
+			Lib.init("default");
 		else
-			Lib.initFiles(argReader.getValue("dataFolder"));
+			Lib.init(argReader.getValue("dataFolder"));
 	}
 	
 }
