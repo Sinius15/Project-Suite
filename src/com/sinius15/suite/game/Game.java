@@ -9,6 +9,9 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
+import com.sinius15.suite.Lib;
+import com.sinius15.suite.util.ArgumentsReader;
+
 
 public class Game extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
@@ -80,6 +83,12 @@ public class Game extends Canvas implements Runnable{
 	}
 
 	public static void main(String[] args) {
+		ArgumentsReader argReader = new ArgumentsReader(args);
+		if(argReader.getValue("dataFolder") == null)
+			Lib.init("default");
+		else
+			Lib.init(argReader.getValue("dataFolder"));
+		
 		Game game = new Game();
 		game.setMinimumSize(new Dimension(WIDTH, HEIGHT));
 		game.setMaximumSize(new Dimension(WIDTH, HEIGHT));

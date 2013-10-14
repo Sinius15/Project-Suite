@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Train extends Entity {
-
+	
 	public int weight;
 	public int speed;
 	public Direction d;
