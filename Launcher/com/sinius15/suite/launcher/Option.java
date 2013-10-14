@@ -8,12 +8,14 @@ public class Option<E> {
 	public Class<?> type;
 	
 	public Update<E> setValue;
+	public Update<E> setValueInFrame;
 	
-	public Option(Class<?> type, E defaultValue, String key ,Update<E> setValue) {
+	public Option(Class<?> type, E defaultValue, String key, Update<E> setValue, Update<E> setValueInFrame) {
 		this.setValue = setValue;
 		this.defaultValue = defaultValue;
 		this.key = key;
 		this.type = type;
+		this.setValueInFrame = setValueInFrame;
 	}
 	
 	public String getType(){

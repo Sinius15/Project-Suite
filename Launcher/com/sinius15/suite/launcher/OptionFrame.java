@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -19,16 +20,16 @@ import javax.swing.border.EmptyBorder;
 public class OptionFrame extends JFrame {
 
 	private static final long serialVersionUID = 8733682719392396550L;
-	private JPanel contentPane;
-	private JTextField pathField;
+	JPanel contentPane;
+	JTextField pathField;
 	JCheckBox AutoUpdate;
-	private JCheckBox defaultDataFolder;
-	private JComboBox<String> LauncherVisability;
-	private JComboBox<String> Version;
-	private JButton browse;
-	private JCheckBox UserCrd;
-	private JTextField heidhtField;
-	private JTextField widthField;
+	JCheckBox defaultDataFolder;
+	JComboBox<String> LauncherVisability;
+	JComboBox<String> Version;
+	JButton browse;
+	JCheckBox UserCrd;
+	JTextField heidhtField;
+	JTextField widthField;
 
 	public OptionFrame() {
 		setResizable(false);
@@ -52,9 +53,9 @@ public class OptionFrame extends JFrame {
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				updateValuesToData();
+				OptionManager.updateValuesToManager();
 				try {
-					Data.saveData();
+					OptionManager.saveOptions(new File(Data.DEFAULT_DATA_FOLDER.getPath() + "\\launcherOptions.yml"));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -163,30 +164,4 @@ public class OptionFrame extends JFrame {
 		
 	}
 	
-	public void updateValuesFromData(){
-		AutoUpdate.setSelected(Data.autoUpdate);
-		
-		defaultDataFolder.setSelected(Data.defaultDataFolder);
-		pathField.setEditable(!defaultDataFolder.isSelected());
-		browse.setEnabled(!defaultDataFolder.isSelected());
-		if(!Data.defaultDataFolder)
-			if(Data.dataFolder.equals("default")) pathField.setText("");
-			else pathField.setText(Data.dataFolder);
-		
-		LauncherVisability.setSelectedIndex(Data.launcherVis);
-		UserCrd.setSelected(Data.saveUser);
-		
-		this.revalidate();
-	}
-	
-	public void updateValuesToData(){
-		Data.autoUpdate = AutoUpdate.isSelected();
-		
-		Data.defaultDataFolder = defaultDataFolder.isSelected();
-		Data.dataFolder = pathField.getText();
-		
-		Data.launcherVis = LauncherVisability.getSelectedIndex();
-		
-		Data.saveUser = UserCrd.isSelected();
-	}
 }

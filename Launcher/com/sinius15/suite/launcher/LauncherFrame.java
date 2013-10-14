@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -36,12 +37,8 @@ public class LauncherFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(Data.launcherFrame.txtUsername.getText().equals("") || new String(Data.launcherFrame.passwordField.getPassword()).equals(""))
 					return;
-				if(Data.saveUser){
-					Data.username = Data.launcherFrame.txtUsername.getText();
-					Data.password = new String(Data.launcherFrame.passwordField.getPassword());
-				}
 				try {
-					Data.saveData();
+					OptionManager.saveOptions(new File(Data.DEFAULT_DATA_FOLDER.getPath() + "\\launcherOptions.yml"));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -84,7 +81,7 @@ public class LauncherFrame extends JFrame {
 		btnOptions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Data.optionFrame.setVisible(true);
-				Data.optionFrame.updateValuesFromData();
+				OptionManager.updateValuesToFrame();
 				Data.launcherFrame.setEnabled(false);
 			}
 		});

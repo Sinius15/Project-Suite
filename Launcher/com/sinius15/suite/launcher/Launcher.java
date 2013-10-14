@@ -1,18 +1,20 @@
 package com.sinius15.suite.launcher;
 
+import java.io.File;
+
 public class Launcher {
 
 	public static void main(String[] args) {
-		
+		Data.initOptions();
 		try {
-			Data.loadData();
+			OptionManager.loadOptions(new File(Data.DEFAULT_DATA_FOLDER.getPath() + "\\launcherOptions.yml"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		Data.launcherFrame.setVisible(true);
-		if(Data.saveUser){
-			Data.launcherFrame.txtUsername.setText(Data.username);
-			Data.launcherFrame.passwordField.setText(Data.password);
+		if((Boolean)OptionManager.getValue("userCredentials")){
+			Data.launcherFrame.txtUsername.setText((String) OptionManager.getValue("username"));
+			Data.launcherFrame.passwordField.setText((String) OptionManager.getValue("password"));
 		}
 	}
 	

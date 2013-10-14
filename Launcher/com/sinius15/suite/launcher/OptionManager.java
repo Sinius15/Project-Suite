@@ -41,7 +41,12 @@ public class OptionManager {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static void loadOptions(File f){
+	public static void loadOptions(File f) throws Exception{
+		if(!f.exists()){
+			f.createNewFile();
+			saveDefaultOptions(f);
+		}
+			
 		YAMLFile data = new YAMLFile(true);
 		data.Load(f);
 		for(Option p : options){
@@ -55,12 +60,22 @@ public class OptionManager {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static void updateValues(){
-		for(Option p : options)
+	public static void updateValuesToManager(){
+		for(Option p : options){
+			System.out.println("first " + p.value);
 			p.setValue.run(p.value);
+			System.out.println("later " + p.value);
+		}
+			
 	}
 	
-	public static Object getString(String key){
+	@SuppressWarnings("unchecked")
+	public static void updateValuesToFrame(){
+		for(Option p : options)
+			p.setValueInFrame.run(p.value);
+	}
+	
+	public static Object getValue(String key){
 		for(Option p : options)
 			if(p.key.equals(key))
 				return p.value;
