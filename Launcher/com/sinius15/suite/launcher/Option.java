@@ -29,7 +29,7 @@ public class Option<E> {
 	}
 	
 	public static interface Update<E> {
-	    public abstract void run(E value);
+	    public abstract void run();
 	}
 	
 }

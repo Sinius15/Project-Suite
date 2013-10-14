@@ -63,7 +63,7 @@ public class OptionManager {
 	public static void updateValuesToManager(){
 		for(Option p : options){
 			System.out.println("first " + p.value);
-			p.setValue.run(p.value);
+			p.setValue.run();
 			System.out.println("later " + p.value);
 		}
 			
@@ -72,7 +72,7 @@ public class OptionManager {
 	@SuppressWarnings("unchecked")
 	public static void updateValuesToFrame(){
 		for(Option p : options)
-			p.setValueInFrame.run(p.value);
+			p.setValueInFrame.run();
 	}
 	
 	public static Object getValue(String key){
