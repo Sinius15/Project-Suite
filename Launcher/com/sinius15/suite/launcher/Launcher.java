@@ -14,6 +14,7 @@ public class Launcher {
 		Data.launcherFrame.setVisible(true);
 		if((Boolean)OptionManager.getValue("userCredentials")){
 			Data.launcherFrame.txtUsername.setText((String) OptionManager.getValue("username"));
+			Data.launcherFrame.passwordField.setEchoChar((char)9679);
 			Data.launcherFrame.passwordField.setText((String) OptionManager.getValue("password"));
 		}
 	}

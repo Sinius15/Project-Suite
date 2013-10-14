@@ -59,17 +59,12 @@ public class OptionManager {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static void updateValuesToManager(){
 		for(Option p : options){
-			System.out.println("first " + p.value);
 			p.setValue.run();
-			System.out.println("later " + p.value);
 		}
-			
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static void updateValuesToFrame(){
 		for(Option p : options)
 			p.setValueInFrame.run();
