@@ -1,12 +1,12 @@
-package com.sinius15.suite.lib;
+package com.sinius15.suite;
 
 import java.io.File;
 
-public class Folders {
+public class Lib {
 
 	public static File MAIN;
 	public static File SAVES;
-	public static File FONTS;
+	public static File RESOURCE;
 	
 	//the lib package bevat allemaal static variablen, de naar dingen toewijzen.
 	//int het lib package hoort bijvoorbeeld een file "general.java". die variablen zoals  "name" & "version"
@@ -24,7 +24,7 @@ public class Folders {
 			MAIN = new File(folderArg);
 		
 		SAVES = new File(MAIN.getPath() + "\\saves");
-		FONTS = new File(MAIN.getPath() + "\\fonts");
+		RESOURCE = new File(MAIN.getPath() + "\\resource");
 		
 	}
 	

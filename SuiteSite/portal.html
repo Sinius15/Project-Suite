@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+
+<head>
+    <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+    <script>
+
+        if (typeof String.prototype.startsWith != 'function') {
+            String.prototype.startsWith = function (str){
+                return this.indexOf(str) == 0;
+            };
+        }
+
+        if (typeof String.prototype.endsWith != 'function') {
+            String.prototype.endsWith = function (str){
+                return this.slice(-str.length) == str;
+            };
+        }
+
+        var suite = {};
+
+        suite.latestVersion = "a0.0"
+        suite.versionList = ["a0.0", "a0.1"];
+
+
+        var param = window.location.search.replace("?", "");
+        if (param === "latestVersion")
+            document.write(suite.latestVersion);
+        else if (param === "versionList")
+            document.write(suite.versionList);
+        else if (param.endsWith(".jar"))
+            document.write('<a href="file.zip"></a>');
+        else
+            document.write("invalid requist");
+        
+    </script>
+</head>
+<body>
+
+</body>
+</html>
