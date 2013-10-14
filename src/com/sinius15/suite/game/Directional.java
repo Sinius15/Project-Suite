@@ -3,10 +3,12 @@ package com.sinius15.suite.game;
 public enum Directional {
 
 	LEFTRIGHT(Direction.LEFT,Direction.RIGHT),
-	UPDOWN(Direction.UP,Direction.DOWN);
+	UPDOWN(Direction.UP,Direction.DOWN),
+	LUPRDOWN(Direction.UPLEFT,Direction.DOWNRIGHT),
+	RUPLDOWN(Direction.UPRIGHT,Direction.DOWNLEFT);
 	
-	private Direction dirTo;
-	private Direction dirFrom;
+	public Direction dirTo;
+	public Direction dirFrom;
 	
 	Directional(Direction dir1 ,Direction dir2) {
 		dirTo = dir1;
