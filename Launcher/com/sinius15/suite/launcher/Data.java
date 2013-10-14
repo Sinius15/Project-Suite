@@ -16,59 +16,67 @@ public class Data {
 	
 	public static void initOptions(){
 		
-		OptionManager.addOption(new Option<Boolean>(Boolean.class, true, "defaultDataFolder", new Option.Update<Boolean>() {@Override public void run(Boolean value) {
-			value = optionFrame.defaultDataFolder.isSelected();
+		final Option<Boolean> p1 = new Option<Boolean>(Boolean.class, true, "defaultDataFolder", new Option.Update<Boolean>() {@Override public void run(Boolean value) {
+			p1.value = optionFrame.defaultDataFolder.isSelected();
 		}}, new Option.Update<Boolean>() {@Override public void run(Boolean value) {
-			optionFrame.defaultDataFolder.setSelected(value);
-		}}));
+			optionFrame.defaultDataFolder.setSelected(p1.value);
+		}});
+		OptionManager.addOption(p1);
 		
-		OptionManager.addOption(new Option<String>(String.class, "default", "dataFolder", new Option.Update<String>() {@Override public void run(String value) {
+		Option<String> p2 = new Option<String>(String.class, "default", "dataFolder", new Option.Update<String>() {@Override public void run(String value) {
 			value = optionFrame.pathField.getText();
 		}}, new Option.Update<String>() {@Override public void run(String value) {
 			optionFrame.pathField.setText(value);
-		}}));
+		}});
+		OptionManager.addOption(p2);
 		
-		OptionManager.addOption(new Option<Boolean>(Boolean.class, true, "autoUpdate", new Option.Update<Boolean>() {@Override public void run(Boolean value) {
+		Option<Boolean> p3 = new Option<Boolean>(Boolean.class, true, "autoUpdate", new Option.Update<Boolean>() {@Override public void run(Boolean value) {
 			value = optionFrame.AutoUpdate.isSelected();
 		}}, new Option.Update<Boolean>() {@Override public void run(Boolean value) {
 			optionFrame.AutoUpdate.setSelected(value);
-		}}));
+		}});
+		OptionManager.addOption(p3);
 		
-		OptionManager.addOption(new Option<String>(String.class, "latest", "version", new Option.Update<String>() {	@Override public void run(String value) {
+		Option<String> p4 = new Option<String>(String.class, "latest", "version", new Option.Update<String>() {	@Override public void run(String value) {
 			value = (String) optionFrame.Version.getSelectedItem();
 		}}, new Option.Update<String>() {@Override public void run(String value) {
 			optionFrame.Version.setSelectedItem(value);
-		}}));
+		}});
+		OptionManager.addOption(p4);
 		
-		OptionManager.addOption(new Option<Integer>(Integer.class, LAUNCHVIS_CLOSE, "launcherVisability", new Option.Update<Integer>() {@Override public void run(Integer value) {
+		Option<Integer> p5 = new Option<Integer>(Integer.class, LAUNCHVIS_CLOSE, "launcherVisability", new Option.Update<Integer>() {@Override public void run(Integer value) {
 			value = optionFrame.LauncherVisability.getSelectedIndex();
 		}}, new Option.Update<Integer>() {@Override public void run(Integer value) {
 			optionFrame.LauncherVisability.setSelectedIndex(value);
-		}}));
+		}});
+		OptionManager.addOption(p5);
 		
-		OptionManager.addOption(new Option<Boolean>(Boolean.class, false, "userCredentials", new Option.Update<Boolean>() {@Override public void run(Boolean value) {
+		Option<Boolean> p6 = new Option<Boolean>(Boolean.class, false, "userCredentials", new Option.Update<Boolean>() {@Override public void run(Boolean value) {
 			value = optionFrame.UserCrd.isSelected();
 		}}, new Option.Update<Boolean>() {@Override public void run(Boolean value) {
 			optionFrame.UserCrd.setSelected(value);
-		}}));
+		}});
+		OptionManager.addOption(p6);
 		
-		OptionManager.addOption(new Option<String>(String.class, "-", "username", new Option.Update<String>() {@Override public void run(String value) {
+		Option<String> p7 = new Option<String>(String.class, "-", "username", new Option.Update<String>() {@Override public void run(String value) {
 			if((Boolean) OptionManager.getValue("userCredentials"))
 				value = launcherFrame.txtUsername.getText();
 			else
 				value = "-";
 		}}, new Option.Update<String>() {@Override public void run(String value) {
 			
-		}}));
+		}});
+		OptionManager.addOption(p7);
 		
-		OptionManager.addOption(new Option<String>(String.class, "-", "password", new Option.Update<String>() {@Override public void run(String value) {
+		Option<String> p8 = new Option<String>(String.class, "-", "password", new Option.Update<String>() {@Override public void run(String value) {
 			if((Boolean) OptionManager.getValue("userCredentials"))
 				value = new String(launcherFrame.passwordField.getPassword());
 			else 
 				value = "-";
 		}}, new Option.Update<String>() {@Override public void run(String value) {
 			
-		}}));
+		}});
+		OptionManager.addOption(p8);
 	}
 	
 }
