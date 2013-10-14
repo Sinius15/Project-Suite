@@ -6,6 +6,7 @@ import java.io.File;
 public class Data {
 	
 	public static final File DEFAULT_DATA_FOLDER = new File(System.getenv("APPDATA") + "\\Suite");
+	public static final File CONFIG_FILE = new File(Data.DEFAULT_DATA_FOLDER.getPath() + "\\launcherOptions.yml");
 
 	public static final int LAUNCHVIS_CLOSE = 0;
 	public static final int LAUNCHVIS_REOPEN = 1;

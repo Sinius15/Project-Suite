@@ -1,15 +1,17 @@
 package com.sinius15.suite.launcher;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -38,7 +40,7 @@ public class LauncherFrame extends JFrame {
 				if(Data.launcherFrame.txtUsername.getText().equals("") || new String(Data.launcherFrame.passwordField.getPassword()).equals(""))
 					return;
 				try {
-					OptionManager.saveOptions(new File(Data.DEFAULT_DATA_FOLDER.getPath() + "\\launcherOptions.yml"));
+					OptionManager.saveOptions(Data.CONFIG_FILE);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -87,5 +89,14 @@ public class LauncherFrame extends JFrame {
 		});
 		btnOptions.setBounds(10, 361, 109, 51);
 		contentPane.add(btnOptions);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 11, 660, 339);
+		contentPane.add(scrollPane);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setEditable(false);
+		scrollPane.setViewportView(textArea);
+		textArea.setFont(new Font("Arial", Font.PLAIN, 12));
 	}
 }
