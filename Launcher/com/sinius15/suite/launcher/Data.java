@@ -25,7 +25,8 @@ public class Data {
 	public static DownlaodFrame downloadFrame = new DownlaodFrame();
 	
 	@SuppressWarnings("rawtypes")
-	private static Option p1, p2, p3, p4, p5, p6, p7, p8, p9, p10;
+	private static Option p1, p3, p4, p5, p6, p7, p8, p9, p10;
+	private static Option<String> p2;
 	
 	public static void initOptions(){
 		
@@ -45,7 +46,7 @@ public class Data {
 		p2 = new Option<String>(String.class, "default", "dataFolder", new Option.Update<String>() {@Override public void run() {
 			p2.value = optionFrame.pathField.getText();
 		}}, new Option.Update<String>() {@Override public void run() {
-			optionFrame.pathField.setText((String) p2.value);
+			optionFrame.pathField.setText(p2.value);
 		}});
 		OptionManager.addOption(p2);
 		

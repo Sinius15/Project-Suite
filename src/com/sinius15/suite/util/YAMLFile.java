@@ -46,7 +46,6 @@ public class YAMLFile {
 				path = deleteLastLevel(path);
 				if(path == null || path.equals(""))
 					break;
-				
 				if(data.get(path) == null){
 					data.put(path, " ");
 				}
@@ -66,7 +65,7 @@ public class YAMLFile {
 				if(line.equals("")) continue;
 				if(line.startsWith("#")) continue;
 				
-				p = line.split(":");
+				p = line.split(":", 2);
 				
 				int count = 0;
 				for(int i = 0; i < p[0].length(); i++) {
@@ -75,6 +74,7 @@ public class YAMLFile {
 				int level = count / 4;
 				
 				String key = p[0].replace(" ", "").replace(":", "");
+				
 				levelName[level] = key;
 				
 				if(p.length == 1){
@@ -123,7 +123,7 @@ public class YAMLFile {
 				if(line.equals("")) continue;
 				if(line.startsWith("#")) continue;
 				
-				p = line.split(":");
+				p = line.split(":", 2);
 				
 				int count = 0;
 				for(int i = 0; i < p[0].length(); i++) {

@@ -19,13 +19,15 @@ public class Downloader {
 
 	private static boolean cancleTask = false;
 	
-	public static synchronized void downloadFile(URL url, File out, PrintStream status) throws IOException{
+	public static synchronized void downloadFile(URL url, File out, PrintStream status) throws Exception{
+		if(url.toURI() ==null)
+			System.out.println("null");
         URLConnection urlConn = url.openConnection();
         int size = urlConn.getContentLength();
         BufferedInputStream is = new BufferedInputStream(urlConn.getInputStream());
         
         BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(out));
-        byte[] b = new byte[128];
+        byte[] b = new byte[8*1024];
         int read = 0;
         int done = 0;
         status.println("starting download of file http://" + url.getHost() + url.getPath());
@@ -53,19 +55,26 @@ public class Downloader {
 		cancleTask = true;
 	}
 	
-    public void unZipIt(String zipFile, String outputFolder, PrintStream status) throws IOException{
+    public static void unZip(String zipFile, String outputFolder, PrintStream status) throws IOException{
     	byte[] buffer = new byte[1024];
     	File folder = new File(outputFolder);
+    	status.println("unzipping...   (to: " + folder.getAbsolutePath() + ")");
     	if(!folder.exists())
     		folder.mkdir();
-
+    	
     	ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
     	ZipEntry ze;
     	while((ze = zis.getNextEntry())!=null){
     	   String fileName = ze.getName();
            File newFile = new File(outputFolder + File.separator + fileName);
- 
-           new File(newFile.getParent()).mkdirs();
+           
+           
+           if(ze.isDirectory()){
+        	   newFile.mkdirs();
+        	   continue;
+           }
+           System.out.println("unziping...   (" + ze.getName() + ")");   
+           newFile.createNewFile();
  
            FileOutputStream fos = new FileOutputStream(newFile);             
  
@@ -77,6 +86,7 @@ public class Downloader {
  
         zis.closeEntry();
     	zis.close();
+    	new File(zipFile).delete();
    }
     
     public static String[] getVersionList(PrintStream status) throws IOException{
@@ -84,12 +94,16 @@ public class Downloader {
     	status.println("Downloading avalable versions...");
     	URLConnection urlConn = url.openConnection();
         BufferedInputStream is = new BufferedInputStream(urlConn.getInputStream());
-        byte[] b = new byte[128];
+        byte[] b = new byte[1024];
         Data.downloadFrame.progressBar.setValue(0);
         is.read(b);
         is.close();
         status.println("Downloading avalable versions done");
-        return new String(b, Charset.forName("US-ASCII")).substring(3).split(",");
+        String input = new String(b, Charset.forName("US-ASCII"));
+        String[] output = input.split(",");
+        output[0] = output[0].substring(3);
+        
+        return output;
     }
     
     public static String getLatestVersion(PrintStream status) throws IOException{
@@ -97,12 +111,12 @@ public class Downloader {
     	status.println("Downloading latest version...");
     	URLConnection urlConn = url.openConnection();
         BufferedInputStream is = new BufferedInputStream(urlConn.getInputStream());
-        byte[] b = new byte[128];
+        byte[] b = new byte[1024];
         Data.downloadFrame.progressBar.setValue(0);
         is.read(b);
         is.close();
         status.println("Downloading latest version");
-        return new String(b, Charset.forName("US-ASCII")).substring(3);
+        return new String(b, Charset.forName("US-ASCII")).substring(3, 9);
     }
 	
 }
