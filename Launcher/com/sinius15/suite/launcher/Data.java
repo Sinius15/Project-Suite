@@ -1,6 +1,14 @@
 package com.sinius15.suite.launcher;
 
 import java.io.File;
+import java.io.IOException;
+
+import javax.swing.DefaultComboBoxModel;
+
+import com.sinius15.suite.launcher.gui.DownlaodFrame;
+import com.sinius15.suite.launcher.gui.LauncherFrame;
+import com.sinius15.suite.launcher.gui.OptionFrame;
+import com.sinius15.suite.launcher.io.Downloader;
 
 @SuppressWarnings("unchecked")
 public class Data {
@@ -14,6 +22,7 @@ public class Data {
 	
 	public static OptionFrame optionFrame = new OptionFrame();
 	public static LauncherFrame launcherFrame = new LauncherFrame();
+	public static DownlaodFrame downloadFrame = new DownlaodFrame();
 	
 	@SuppressWarnings("rawtypes")
 	private static Option p1, p2, p3, p4, p5, p6, p7, p8, p9, p10;
@@ -31,7 +40,6 @@ public class Data {
 			if((boolean) p1.value)
 				optionFrame.pathField.setText("default");
 		}});
-		
 		OptionManager.addOption(p1);
 		
 		p2 = new Option<String>(String.class, "default", "dataFolder", new Option.Update<String>() {@Override public void run() {
@@ -48,10 +56,20 @@ public class Data {
 		}});
 		OptionManager.addOption(p3);
 		
-		p4 = new Option<String>(String.class, "latest", "version", new Option.Update<String>() {	@Override public void run() {
+		p4 = new Option<String>(String.class, "-", "version", new Option.Update<String>() {	@Override public void run() {
 			p4.value = (String) optionFrame.Version.getSelectedItem();
 		}}, new Option.Update<String>() {@Override public void run() {
-			optionFrame.Version.setSelectedItem(p4.value);
+			try {
+				String[] versions = Downloader.getVersionList(System.out);
+				optionFrame.Version.setModel(new DefaultComboBoxModel<String>(versions));
+				if(p4.value.equals("-"))
+					optionFrame.Version.setSelectedIndex(versions.length-1);
+				else
+					optionFrame.Version.setSelectedItem(p4.value);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 		}});
 		OptionManager.addOption(p4);
 		

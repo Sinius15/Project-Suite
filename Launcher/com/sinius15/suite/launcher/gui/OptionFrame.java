@@ -1,4 +1,4 @@
-package com.sinius15.suite.launcher;
+package com.sinius15.suite.launcher.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,19 +16,22 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import com.sinius15.suite.launcher.Data;
+import com.sinius15.suite.launcher.OptionManager;
+
 public class OptionFrame extends JFrame {
 
 	private static final long serialVersionUID = 8733682719392396550L;
-	JPanel contentPane;
-	JTextField pathField;
-	JCheckBox AutoUpdate;
-	JCheckBox defaultDataFolder;
-	JComboBox<String> LauncherVisability;
-	JComboBox<String> Version;
-	JButton browse;
-	JCheckBox UserCrd;
-	JTextField heidhtField;
-	JTextField widthField;
+	public JPanel contentPane;
+	public JTextField pathField;
+	public JCheckBox AutoUpdate;
+	public JCheckBox defaultDataFolder;
+	public JComboBox<String> LauncherVisability;
+	public JComboBox<String> Version;
+	public JButton browse;
+	public JCheckBox UserCrd;
+	public JTextField heidhtField;
+	public JTextField widthField;
 
 	public OptionFrame() {
 		setResizable(false);
@@ -110,7 +113,7 @@ public class OptionFrame extends JFrame {
 		contentPane.add(defaultDataFolder);
 		
 		Version = new JComboBox<String>();
-		Version.setModel(new DefaultComboBoxModel<String>(new String[] {"Latest"}));
+		Version.setModel(new DefaultComboBoxModel<String>(new String[] {"-"}));
 		Version.setBounds(191, 12, 286, 20);
 		contentPane.add(Version);
 		

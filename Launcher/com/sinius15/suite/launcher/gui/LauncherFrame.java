@@ -1,4 +1,4 @@
-package com.sinius15.suite.launcher;
+package com.sinius15.suite.launcher.gui;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -15,12 +15,17 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
+import com.sinius15.suite.launcher.Data;
+import com.sinius15.suite.launcher.Launcher;
+import com.sinius15.suite.launcher.MessageConsole;
+import com.sinius15.suite.launcher.OptionManager;
+
 public class LauncherFrame extends JFrame {
 
 	private static final long serialVersionUID = -9026214061969231008L;
 	private JPanel contentPane;
-	JTextField txtUsername;
-	JPasswordField passwordField;
+	public JTextField txtUsername;
+	public JPasswordField passwordField;
 	private boolean passwordFieldHadFocus = false;
 	private boolean textFieldHadFocus = false;
 	private JButton btnOptions;

@@ -1,68 +1,37 @@
-﻿<!DOCTYPE html>
-
-<head>
-    <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
-    <script>
-
-    </script>
-    <script>
-
-        if (typeof String.prototype.startsWith != 'function') {
-            String.prototype.startsWith = function (str){
-                return this.indexOf(str) == 0;
-            };
+﻿<?php
+    if($_SERVER['QUERY_STRING'] == 'versionList'){
+            // Opens directory
+        $myDirectory=opendir("./versions");
+        while($entryName=readdir($myDirectory)) {
+            $dirArray[]=($entryName);
         }
-
-        if (typeof String.prototype.endsWith != 'function') {
-            String.prototype.endsWith = function (str){
-                return this.slice(-str.length) == str;
-            };
-        }
-
-        var param = window.location.search.replace("?", "");
-        if (param === "")
-            document.write('<p>This is the page of "Project Suite".</p> <p>In this project davidot and sinius15 have bundeled their capabilitys to make an awsome game.</p>');
-        
-    </script>
-</head>
-
-<body>
-    <?php
-        if($_SERVER['QUERY_STRING'] == 'versionList'){
-             // Opens directory
-            $myDirectory=opendir("./versions");
-            while($entryName=readdir($myDirectory)) {
-                $dirArray[]=($entryName);
-            }
-            $indexCount=count($dirArray);
-            closedir($myDirectory);
-            $outputText = "";
-            for($index=0; $index < $indexCount; $index++) {
-                $name=$dirArray[$index];
-                if(substr_compare($name, ".zip", -4, 4) === 0 && $name !== "" && $name !== ".")
-                    if($outputText === "")
-                        $outputText = $name;
-                    else
-                        $outputText = $outputText . "," . $name;
-            }
-            echo("$outputText");
-        }
-        if($_SERVER['QUERY_STRING'] == 'latestVersion'){
-             // Opens directory
-            $myDirectory=opendir("./versions");
-            while($entryName=readdir($myDirectory)) {
-                $dirArray[]=($entryName);
-            }
-            $indexCount=count($dirArray);
-            closedir($myDirectory);
-            $outputText = "";
-            for($index=0; $index < $indexCount; $index++) {
-                $name=$dirArray[$index];
-                if(substr_compare($name, ".zip", -4, 4) === 0 && $name !== "" && $name !== ".")
+        $indexCount=count($dirArray);
+        closedir($myDirectory);
+        $outputText = "";
+        for($index=0; $index < $indexCount; $index++) {
+            $name=$dirArray[$index];
+            if(substr_compare($name, ".zip", -4, 4) === 0 && $name !== "" && $name !== ".")
+                if($outputText === "")
                     $outputText = str_replace(".zip", "", $name, $count);
-            }
-            echo("$outputText");
+                else
+                    $outputText = $outputText . "," . str_replace(".zip", "", $name, $count);
         }
-    ?>
-</body>
-</html>
+        echo("$outputText");
+    }
+    if($_SERVER['QUERY_STRING'] == 'latestVersion'){
+            // Opens directory
+        $myDirectory=opendir("./versions");
+        while($entryName=readdir($myDirectory)) {
+            $dirArray[]=($entryName);
+        }
+        $indexCount=count($dirArray);
+        closedir($myDirectory);
+        $outputText = "";
+        for($index=0; $index < $indexCount; $index++) {
+            $name=$dirArray[$index];
+            if(substr_compare($name, ".zip", -4, 4) === 0 && $name !== "" && $name !== ".")
+                $outputText = str_replace(".zip", "", $name, $count);
+        }
+        echo("$outputText");
+    }
+?>

@@ -1,0 +1,108 @@
+package com.sinius15.suite.launcher.io;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.Charset;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
+import com.sinius15.suite.launcher.Data;
+
+public class Downloader {
+
+	private static boolean cancleTask = false;
+	
+	public static synchronized void downloadFile(URL url, File out, PrintStream status) throws IOException{
+        URLConnection urlConn = url.openConnection();
+        int size = urlConn.getContentLength();
+        BufferedInputStream is = new BufferedInputStream(urlConn.getInputStream());
+        
+        BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(out));
+        byte[] b = new byte[128];
+        int read = 0;
+        int done = 0;
+        status.println("starting download of file http://" + url.getHost() + url.getPath());
+        
+        status.println("downloading...   file size: " + size);
+        Data.downloadFrame.progressBar.setValue(0);
+        while((read = is.read(b)) > -1){
+        	if(cancleTask){
+        		cancleTask = false;
+        		break;
+        	}
+        		
+            bout.write(b,0, read);
+            done += read;
+            status.println("downloading...   (" + done + "/" + size + ")");
+            Data.downloadFrame.progressBar.setValue((done/size)*100);
+        }
+        status.println("downloading...   (done)");
+        bout.flush();
+        bout.close();
+        is.close();
+	}
+	
+	public static void cancleTasks(){
+		cancleTask = true;
+	}
+	
+    public void unZipIt(String zipFile, String outputFolder, PrintStream status) throws IOException{
+    	byte[] buffer = new byte[1024];
+    	File folder = new File(outputFolder);
+    	if(!folder.exists())
+    		folder.mkdir();
+
+    	ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile));
+    	ZipEntry ze;
+    	while((ze = zis.getNextEntry())!=null){
+    	   String fileName = ze.getName();
+           File newFile = new File(outputFolder + File.separator + fileName);
+ 
+           new File(newFile.getParent()).mkdirs();
+ 
+           FileOutputStream fos = new FileOutputStream(newFile);             
+ 
+           int len;
+           while ((len = zis.read(buffer)) > 0) 
+        	   fos.write(buffer, 0, len);
+           fos.close();   
+    	}
+ 
+        zis.closeEntry();
+    	zis.close();
+   }
+    
+    public static String[] getVersionList(PrintStream status) throws IOException{
+    	URL url = new URL("http://sinius15.com/suite/?versionList");
+    	status.println("Downloading avalable versions...");
+    	URLConnection urlConn = url.openConnection();
+        BufferedInputStream is = new BufferedInputStream(urlConn.getInputStream());
+        byte[] b = new byte[128];
+        Data.downloadFrame.progressBar.setValue(0);
+        is.read(b);
+        is.close();
+        status.println("Downloading avalable versions done");
+        return new String(b, Charset.forName("US-ASCII")).substring(3).split(",");
+    }
+    
+    public static String getLatestVersion(PrintStream status) throws IOException{
+    	URL url = new URL("http://sinius15.com/suite/?latestVersion");
+    	status.println("Downloading latest version...");
+    	URLConnection urlConn = url.openConnection();
+        BufferedInputStream is = new BufferedInputStream(urlConn.getInputStream());
+        byte[] b = new byte[128];
+        Data.downloadFrame.progressBar.setValue(0);
+        is.read(b);
+        is.close();
+        status.println("Downloading latest version");
+        return new String(b, Charset.forName("US-ASCII")).substring(3);
+    }
+	
+}
