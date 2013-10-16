@@ -1,14 +1,12 @@
 package com.sinius15.suite.launcher;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.DefaultComboBoxModel;
 
 import com.sinius15.suite.launcher.gui.DownlaodFrame;
 import com.sinius15.suite.launcher.gui.LauncherFrame;
 import com.sinius15.suite.launcher.gui.OptionFrame;
-import com.sinius15.suite.launcher.io.Downloader;
 
 @SuppressWarnings("unchecked")
 public class Data {
@@ -51,25 +49,24 @@ public class Data {
 		OptionManager.addOption(p2);
 		
 		p3 = new Option<Boolean>(Boolean.class, true, "autoUpdate", new Option.Update<Boolean>() {@Override public void run() {
-			p3.value = optionFrame.AutoUpdate.isSelected();
+			p3.value = optionFrame.latestVersion.isSelected();
+			
 		}}, new Option.Update<Boolean>() {@Override public void run() {
-			optionFrame.AutoUpdate.setSelected((boolean) p3.value);
+			optionFrame.latestVersion.setSelected((boolean) p3.value);
+			optionFrame.Version.setEnabled(!(boolean) p3.value);
 		}});
 		OptionManager.addOption(p3);
 		
 		p4 = new Option<String>(String.class, "-", "version", new Option.Update<String>() {	@Override public void run() {
 			p4.value = (String) optionFrame.Version.getSelectedItem();
 		}}, new Option.Update<String>() {@Override public void run() {
-			try {
-				String[] versions = Downloader.getVersionList(System.out);
-				optionFrame.Version.setModel(new DefaultComboBoxModel<String>(versions));
-				if(p4.value.equals("-"))
-					optionFrame.Version.setSelectedIndex(versions.length-1);
-				else
-					optionFrame.Version.setSelectedItem(p4.value);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			if(Launcher.versionList == null)
+				return;
+			optionFrame.Version.setModel(new DefaultComboBoxModel<String>(Launcher.versionList));
+			if(p4.value.equals("-"))
+				optionFrame.Version.setSelectedIndex(Launcher.versionList.length-1);
+			else
+				optionFrame.Version.setSelectedItem(p4.value);
 			
 		}});
 		OptionManager.addOption(p4);

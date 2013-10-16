@@ -1,6 +1,7 @@
 package com.sinius15.suite.launcher.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.sinius15.suite.launcher.Data;
@@ -27,8 +29,8 @@ public class LauncherFrame extends JFrame {
 	private JPanel contentPane;
 	public JTextField txtUsername;
 	public JPasswordField passwordField;
-	private boolean passwordFieldHadFocus = false;
-	private boolean textFieldHadFocus = false;
+	public boolean passwordFieldHadFocus = false;
+	public boolean textFieldHadFocus = false;
 	private JButton btnOptions;
 	public JButton btnPlay;
 
@@ -100,13 +102,15 @@ public class LauncherFrame extends JFrame {
 		contentPane.add(btnOptions);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setBounds(10, 11, 660, 339);
-		
 		contentPane.add(scrollPane);
 		
 		JTextPane console = new JTextPane();
 		console.setFont(new Font("Arial", Font.PLAIN, 12));
+		console.setPreferredSize(new Dimension(100000, 1000));
 		scrollPane.setViewportView(console);
+		
 		MessageConsole mc = new MessageConsole(console);
 		
 		JButton btnPlayOffline = new JButton("Play \r\nOffline");
@@ -127,8 +131,5 @@ public class LauncherFrame extends JFrame {
 		mc.redirectOut();
 		mc.redirectErr(Color.RED, null);
 		setLocationRelativeTo(null);
-		System.out.println("hello                                                                                                                                                        "
-				+ "                                                                                                                                                                 "
-				+ "                                                                                                                                                                  ");
 	}
 }

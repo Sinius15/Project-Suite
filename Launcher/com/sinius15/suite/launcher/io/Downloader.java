@@ -89,6 +89,7 @@ public class Downloader {
     	new File(zipFile).delete();
    }
     
+    
     public static String[] getVersionList(PrintStream status) throws IOException{
     	URL url = new URL("http://sinius15.com/suite/?versionList");
     	status.println("Downloading avalable versions...");
@@ -105,6 +106,7 @@ public class Downloader {
         
         return output;
     }
+    
     
     public static String getLatestVersion(PrintStream status) throws IOException{
     	URL url = new URL("http://sinius15.com/suite/?latestVersion");

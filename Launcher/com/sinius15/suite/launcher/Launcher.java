@@ -15,20 +15,42 @@ import com.sinius15.suite.launcher.io.Downloader;
 
 public class Launcher {
 
+	public static String latestVersion = null;
+	public static String[] versionList = null;
+	
 	public static void main(String[] args) {
+		Data.launcherFrame.setVisible(true);
+		initOnlineStuff();
 		Data.initOptions();
 		try {
 			OptionManager.loadOptions(Data.CONFIG_FILE);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Data.launcherFrame.setVisible(true);
+		
 		if((Boolean)OptionManager.getValue("userCredentials")){
 			Data.launcherFrame.txtUsername.setText((String) OptionManager.getValue("username"));
+			Data.launcherFrame.textFieldHadFocus = true;
 			Data.launcherFrame.passwordField.setEchoChar((char)9679);
 			Data.launcherFrame.passwordField.setText((String) OptionManager.getValue("password"));
+			Data.launcherFrame.passwordFieldHadFocus = true;
 		}
-
+	}
+	
+	public static void initOnlineStuff(){
+		Thread internetThread = new Thread(new Runnable() {@Override public void run() {
+			try {
+				Data.launcherFrame.btnPlay.setEnabled(false);
+				Launcher.latestVersion = Downloader.getLatestVersion(System.out);
+				Launcher.versionList = Downloader.getVersionList(System.out);
+				Data.launcherFrame.btnPlay.setEnabled(true);
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.err.println("Could not retreive data from the internet. Please try again by restarting the launcher.");
+				System.err.println("If a restart didn't work, you can play in offline mode.");
+			}
+		}}, "getInternetData");
+		internetThread.start();
 	}
 	
 	private static Thread runThread, observer;
@@ -41,9 +63,11 @@ public class Launcher {
 			while(true)
 				if(!runThread.isAlive())
 					break;
-			System.out.println("Game stopped");
+			if((Integer)OptionManager.getValue("launcherVisability") == Data.LAUNCHVIS_REOPEN)
+				Data.launcherFrame.setVisible(true);	
+			System.out.println("Game stopped");	
 			Data.launcherFrame.btnPlay.setEnabled(true);
-					
+			
 		}}, "Observer");
 		observer.start();
 	}
@@ -56,6 +80,8 @@ public class Launcher {
 			while(true)
 				if(!runThread.isAlive())
 					break;
+			if((Integer)OptionManager.getValue("launcherVisability") == Data.LAUNCHVIS_REOPEN)
+				Data.launcherFrame.setVisible(true);
 			System.out.println("Game stopped");
 			Data.launcherFrame.btnPlay.setEnabled(true);
 					
@@ -81,7 +107,7 @@ public class Launcher {
 	}};
 	
 	private static Runnable startGameOnline = new Runnable() {@Override public void run() {
-		
+		 
 		String versionToStart = ((String) OptionManager.getValue("version")).substring(0, 6);
 		
 		String dataFolder;
@@ -93,13 +119,8 @@ public class Launcher {
 		String localVersion = getLocalVersion(dataFolder);
 		
 		try{
-			String latestVersion = Downloader.getLatestVersion(System.out);
-			if((Boolean) OptionManager.getValue("autoUpdate") && !latestVersion.equals(versionToStart)){
-				int n = JOptionPane.showConfirmDialog(Data.launcherFrame, "You have selected an outdated version in the option menu. do you want to update to the latest version?", 
-						"update?", JOptionPane.YES_NO_OPTION);
-				if(n == JOptionPane.YES_NO_OPTION){
-					versionToStart = latestVersion;
-				}
+			if((Boolean) OptionManager.getValue("autoUpdate")){
+				versionToStart = latestVersion;
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -135,6 +156,12 @@ public class Launcher {
 			e1.printStackTrace();
 			return;
 		}
+		
+		if((Integer)OptionManager.getValue("launcherVisability") == Data.LAUNCHVIS_CLOSE)
+			System.exit(0);
+		if((Integer)OptionManager.getValue("launcherVisability") == Data.LAUNCHVIS_REOPEN)
+			Data.launcherFrame.setVisible(false);
+		
 		//this is for the reading of errors
 		final InputStream err = p.getErrorStream();
 		Thread errThread = new Thread(new Runnable() {@Override public void run() {

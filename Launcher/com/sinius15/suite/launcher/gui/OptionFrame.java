@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -24,7 +25,7 @@ public class OptionFrame extends JFrame {
 	private static final long serialVersionUID = 8733682719392396550L;
 	public JPanel contentPane;
 	public JTextField pathField;
-	public JCheckBox AutoUpdate;
+	public JCheckBox latestVersion;
 	public JCheckBox defaultDataFolder;
 	public JComboBox<String> LauncherVisability;
 	public JComboBox<String> Version;
@@ -81,7 +82,7 @@ public class OptionFrame extends JFrame {
 		contentPane.add(btnDiscard);
 		
 		pathField = new JTextField();
-		pathField.setBounds(191, 69, 248, 20);
+		pathField.setBounds(191, 39, 248, 20);
 		contentPane.add(pathField);
 		pathField.setColumns(10);
 		
@@ -99,42 +100,57 @@ public class OptionFrame extends JFrame {
 				pathField.setText(path);
 			}
 		});
-		browse.setBounds(451, 68, 26, 23);
+		browse.setBounds(451, 38, 26, 23);
 		contentPane.add(browse);
 		
 		defaultDataFolder = new JCheckBox("Default data folder");
 		defaultDataFolder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					pathField.setEditable(!defaultDataFolder.isSelected());
-					browse.setEnabled(!defaultDataFolder.isSelected());
+				pathField.setEditable(!defaultDataFolder.isSelected());
+				browse.setEnabled(!defaultDataFolder.isSelected());
 			}
 		});
-		defaultDataFolder.setBounds(10, 68, 132, 23);
+		defaultDataFolder.setBounds(10, 38, 132, 23);
 		contentPane.add(defaultDataFolder);
 		
 		Version = new JComboBox<String>();
-		Version.setModel(new DefaultComboBoxModel<String>(new String[] {"-"}));
+		Version.setModel(new DefaultComboBoxModel<String>(new String[] {"No Internet Connection..."}));
 		Version.setBounds(191, 12, 286, 20);
 		contentPane.add(Version);
 		
 		LauncherVisability = new JComboBox<String>();
 		LauncherVisability.setModel(new DefaultComboBoxModel<String>(new String[] {"Close launcher when game starts", "Hide launcher and re-open when game closes", "Keep the launcher open"}));
-		LauncherVisability.setBounds(191, 40, 286, 20);
+		LauncherVisability.setBounds(191, 69, 286, 20);
 		contentPane.add(LauncherVisability);
 		
-		JLabel lblVersion = new JLabel("  Version");
-		lblVersion.setBounds(10, 13, 112, 18);
-		contentPane.add(lblVersion);
-		
 		JLabel lblLauncherVisability = new JLabel("  Launcher Visability");
-		lblLauncherVisability.setBounds(10, 41, 128, 18);
+		lblLauncherVisability.setBounds(10, 70, 128, 18);
 		contentPane.add(lblLauncherVisability);
 		
-		AutoUpdate = new JCheckBox("Auto Update");
-		AutoUpdate.setBounds(10, 155, 112, 24);
-		contentPane.add(AutoUpdate);
+		latestVersion = new JCheckBox("Use latest version");
+		latestVersion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Version.setEnabled(!latestVersion.isSelected());
+			}
+		});
+		latestVersion.setBounds(10, 10, 151, 24);
+		contentPane.add(latestVersion);
 		
 		UserCrd = new JCheckBox("Save User Credentials");
+		UserCrd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(UserCrd.isSelected()){
+					int r = JOptionPane.showConfirmDialog(Data.launcherFrame, "<html>Your name and password will be saved in a plain text file.<br> Are you sure you want to save your name and password?</html>"
+							,"Are you sure?", JOptionPane.YES_NO_OPTION);
+					if(r == JOptionPane.NO_OPTION)
+						UserCrd.setSelected(false);
+					
+					
+				}
+					
+					
+			}
+		});
 		UserCrd.setBounds(10, 127, 163, 24);
 		contentPane.add(UserCrd);
 		
