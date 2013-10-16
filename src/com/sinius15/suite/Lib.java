@@ -7,6 +7,7 @@ public class Lib {
 	public static File FOLDER_MAIN;
 	public static File FOLDER_SAVES;
 	public static File FOLDER_RESOURCE;
+	public static final String TITLE = "Project Suite";
 	
 	public static int SCREEN_WIDTH, SCREEN_HEIGHT;
 	

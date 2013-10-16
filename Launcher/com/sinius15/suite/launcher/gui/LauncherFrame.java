@@ -106,7 +106,7 @@ public class LauncherFrame extends JFrame {
 		MessageConsole mc = new MessageConsole(console);
 		mc.redirectOut();
 		mc.redirectErr(Color.RED, null);
-		
+		setLocationRelativeTo(null);
 		
 		
 	}

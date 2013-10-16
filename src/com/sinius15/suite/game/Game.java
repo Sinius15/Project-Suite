@@ -12,13 +12,9 @@ import javax.swing.JFrame;
 import com.sinius15.suite.Lib;
 import com.sinius15.suite.util.ArgumentsReader;
 
-
 public class Game extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
-
-	public static final int SCREENWIDHTSTART = 1;
-	public static final int SCREENHEIGHTSTART = 1;
-	public static final String TITLE = "Project Suite";
+	
 	public boolean isRunning = false;
 	public Level level;
 	
@@ -63,7 +59,7 @@ public class Game extends Canvas implements Runnable{
 			requestFocus();
 			return;
 		}
-		BufferedImage img = new BufferedImage(WIDTH, HEIGHT,
+		BufferedImage img = new BufferedImage(Lib.SCREEN_WIDTH, Lib.SCREEN_HEIGHT,
 				BufferedImage.TYPE_INT_ARGB);
 		img.createGraphics();
 		
@@ -83,16 +79,20 @@ public class Game extends Canvas implements Runnable{
 	}
 
 	public static void main(String[] args) {
-		ArgumentsReader argReader = new ArgumentsReader(args);
+		try{
+			ArgumentsReader argReader = new ArgumentsReader(args);
 			Lib.init(argReader.getValue("dataFolder"), Integer.parseInt(argReader.getValue("screenW")), Integer.parseInt(argReader.getValue("screenH")));
-		
+		}catch(NullPointerException e){
+			e.printStackTrace();
+			System.exit(1);
+		}
 		Game game = new Game();
-		game.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-		game.setMaximumSize(new Dimension(WIDTH, HEIGHT));
-		game.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+		game.setMinimumSize(new Dimension(Lib.SCREEN_WIDTH, Lib.SCREEN_HEIGHT));
+		game.setMaximumSize(new Dimension(Lib.SCREEN_WIDTH, Lib.SCREEN_HEIGHT));
+		game.setPreferredSize(new Dimension(Lib.SCREEN_WIDTH, Lib.SCREEN_HEIGHT));
 		game.setIgnoreRepaint(true);
 
-		JFrame frame = new JFrame(Game.TITLE);
+		JFrame frame = new JFrame(Lib.TITLE);
 		frame.setIgnoreRepaint(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
