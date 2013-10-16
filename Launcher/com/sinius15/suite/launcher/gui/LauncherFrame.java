@@ -1,6 +1,7 @@
 package com.sinius15.suite.launcher.gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -29,7 +30,7 @@ public class LauncherFrame extends JFrame {
 	private boolean passwordFieldHadFocus = false;
 	private boolean textFieldHadFocus = false;
 	private JButton btnOptions;
-
+	public JButton btnPlay;
 
 	public LauncherFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,25 +40,25 @@ public class LauncherFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnPlay = new JButton("Play");
+		btnPlay = new JButton("Play");
+		btnPlay.setFont(new Font("Arial", Font.PLAIN, 14));
 		btnPlay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Data.launcherFrame.txtUsername.getText().equals("") || new String(Data.launcherFrame.passwordField.getPassword()).equals(""))
-					return;
 				try {
 					OptionManager.saveOptions(Data.CONFIG_FILE);
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-				Launcher.launchGame();
+				Launcher.launchGameOnline();
 			}
 		});
-		btnPlay.setBounds(581, 361, 89, 51);
+		btnPlay.setBounds(581, 362, 89, 28);
 		contentPane.add(btnPlay);
 		
 		txtUsername = new JTextField();
+		txtUsername.setFont(new Font("Arial", Font.PLAIN, 12));
 		txtUsername.setText("Username");
-		txtUsername.setBounds(425, 361, 146, 20);
+		txtUsername.setBounds(425, 362, 146, 20);
 		txtUsername.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -71,6 +72,7 @@ public class LauncherFrame extends JFrame {
 		txtUsername.setColumns(10);
 		
 		passwordField = new JPasswordField("Password");
+		passwordField.setFont(new Font("Arial", Font.PLAIN, 12));
 		passwordField.setEchoChar((char)0);
 		passwordField.addFocusListener(new FocusAdapter() {
 			@Override
@@ -86,6 +88,7 @@ public class LauncherFrame extends JFrame {
 		contentPane.add(passwordField);
 		
 		btnOptions = new JButton("Options");
+		btnOptions.setFont(new Font("Arial", Font.PLAIN, 14));
 		btnOptions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Data.optionFrame.setVisible(true);
@@ -98,16 +101,34 @@ public class LauncherFrame extends JFrame {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 660, 339);
+		
 		contentPane.add(scrollPane);
 		
 		JTextPane console = new JTextPane();
+		console.setFont(new Font("Arial", Font.PLAIN, 12));
 		scrollPane.setViewportView(console);
-		
 		MessageConsole mc = new MessageConsole(console);
+		
+		JButton btnPlayOffline = new JButton("Play \r\nOffline");
+		btnPlayOffline.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnPlayOffline.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					OptionManager.saveOptions(Data.CONFIG_FILE);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				Launcher.launchGameOffline();
+			}
+		});
+		btnPlayOffline.setBounds(581, 392, 89, 20);
+		contentPane.add(btnPlayOffline);
+		
 		mc.redirectOut();
 		mc.redirectErr(Color.RED, null);
 		setLocationRelativeTo(null);
-		
-		
+		System.out.println("hello                                                                                                                                                        "
+				+ "                                                                                                                                                                 "
+				+ "                                                                                                                                                                  ");
 	}
 }

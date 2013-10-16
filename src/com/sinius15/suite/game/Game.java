@@ -79,6 +79,13 @@ public class Game extends Canvas implements Runnable{
 	}
 
 	public static void main(String[] args) {
+		System.out.println("Starting the game...");
+		System.err.println("This should be displayed with a red colour!");
+		try {
+			throw new Exception("This is a text exceptoin");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		try{
 			ArgumentsReader argReader = new ArgumentsReader(args);
 			Lib.init(argReader.getValue("dataFolder"), Integer.parseInt(argReader.getValue("screenW")), Integer.parseInt(argReader.getValue("screenH")));

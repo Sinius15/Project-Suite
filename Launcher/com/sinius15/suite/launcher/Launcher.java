@@ -1,8 +1,11 @@
 package com.sinius15.suite.launcher;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -28,7 +31,57 @@ public class Launcher {
 
 	}
 	
-	public static void launchGame(){
+	private static Thread runThread, observer;
+	public static void launchGameOnline(){
+		System.out.println("Starting the game in online mode...");
+		Data.launcherFrame.btnPlay.setEnabled(false);
+		runThread = new Thread(startGameOnline, "Game");
+		runThread.start();
+		observer = new Thread(new Runnable() {@Override public void run() {
+			while(true)
+				if(!runThread.isAlive())
+					break;
+			System.out.println("Game stopped");
+			Data.launcherFrame.btnPlay.setEnabled(true);
+					
+		}}, "Observer");
+		observer.start();
+	}
+	public static void launchGameOffline(){
+		System.out.println("Starting the game in offline mode...");
+		Data.launcherFrame.btnPlay.setEnabled(false);
+		runThread = new Thread(startGameOffline, "Game");
+		runThread.start();
+		observer = new Thread(new Runnable() {@Override public void run() {
+			while(true)
+				if(!runThread.isAlive())
+					break;
+			System.out.println("Game stopped");
+			Data.launcherFrame.btnPlay.setEnabled(true);
+					
+		}}, "Observer");
+		observer.start();
+	}
+	
+	private static Runnable startGameOffline = new Runnable(){@Override public void run(){
+		Data.launcherFrame.btnPlay.setEnabled(false);
+		String dataFolder;
+		
+		if((Boolean)OptionManager.getValue("defaultDataFolder"))
+			dataFolder = Data.DEFAULT_DATA_FOLDER.getAbsolutePath();
+		else
+			dataFolder = (String) OptionManager.getValue("dataFolder");
+		String localVersion = getLocalVersion(dataFolder);
+		if(localVersion == null){
+			JOptionPane.showMessageDialog(Data.launcherFrame, "The game has never downloaded any versions before, so it can't start the game offline.");
+			return;
+		}
+		startJar(dataFolder);	
+		
+	}};
+	
+	private static Runnable startGameOnline = new Runnable() {@Override public void run() {
+		
 		String versionToStart = ((String) OptionManager.getValue("version")).substring(0, 6);
 		
 		String dataFolder;
@@ -68,7 +121,57 @@ public class Launcher {
 			}
 		}
 		
-		System.out.println("The game arguments are: " + getArguments());
+		startJar(dataFolder);
+	}};
+	
+	private static void startJar(String dataFolder){
+		String arguments = getArguments();
+		System.out.println("The game arguments are: " + arguments);
+		
+		Process p = null;
+		try {
+			p = Runtime.getRuntime().exec("java -jar " + dataFolder + "\\game.jar " + arguments);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			return;
+		}
+		//this is for the reading of errors
+		final InputStream err = p.getErrorStream();
+		Thread errThread = new Thread(new Runnable() {@Override public void run() {
+			try {
+				BufferedReader errReader = new BufferedReader(new InputStreamReader(err));
+				String line = null;
+				while ((line = errReader.readLine()) != null) 
+					System.err.println(line);
+				errReader.close();
+			} catch (Exception e) { 
+				e.printStackTrace();
+			}
+		}}, "errThread");
+		errThread.start();
+		
+		//this is for the reading of normal output
+		InputStream in = p.getInputStream();
+		try {
+			BufferedReader txtReader = new BufferedReader(new InputStreamReader(in));
+			String line = null;
+			while ((line = txtReader.readLine()) != null) 
+				System.out.println(line);
+			txtReader.close();
+			
+		} catch (Exception e) { 
+			e.printStackTrace();
+		}
+		
+		while(true)
+			if(!errThread.isAlive())
+				break;
+		try {
+			in.close();
+			err.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static String getArguments(){

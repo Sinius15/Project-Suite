@@ -115,7 +115,7 @@ public class Downloader {
         Data.downloadFrame.progressBar.setValue(0);
         is.read(b);
         is.close();
-        status.println("Downloading latest version");
+        status.println("Downloading latest version done");
         return new String(b, Charset.forName("US-ASCII")).substring(3, 9);
     }
 	
