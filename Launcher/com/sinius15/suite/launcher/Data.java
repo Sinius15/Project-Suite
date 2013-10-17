@@ -106,14 +106,14 @@ public class Data {
 		}});
 		OptionManager.addOption(p8);
 		
-		p9 = new Option<Integer>(Integer.class, 720, "screenWidth", new Option.Update<Integer>() {@Override public void run() {
+		p9 = new Option<Integer>(Integer.class, 1280, "screenWidth", new Option.Update<Integer>() {@Override public void run() {
 			p9.value = Integer.parseInt(optionFrame.widthField.getText());
 		}}, new Option.Update<Integer>() {@Override public void run() {
 			optionFrame.widthField.setText(String.valueOf(p9.value));
 		}});
 		OptionManager.addOption(p9);
 		
-		p10 = new Option<Integer>(Integer.class, 360, "screenHeight", new Option.Update<Integer>() {@Override public void run() {
+		p10 = new Option<Integer>(Integer.class, 720, "screenHeight", new Option.Update<Integer>() {@Override public void run() {
 			p10.value = Integer.parseInt(optionFrame.heidhtField.getText());
 		}}, new Option.Update<Integer>() {@Override public void run() {
 			optionFrame.heidhtField.setText(String.valueOf(p10.value));

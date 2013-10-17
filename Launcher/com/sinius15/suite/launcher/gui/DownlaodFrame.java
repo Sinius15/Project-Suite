@@ -17,9 +17,7 @@ public class DownlaodFrame extends JFrame {
 	private static final long serialVersionUID = -4800316003710327194L;
 	private JPanel contentPane;
 	public JProgressBar progressBar;
-	/**
-	 * Create the frame.
-	 */
+
 	public DownlaodFrame() {
 		setTitle("Downlaoder");
 		setResizable(false);

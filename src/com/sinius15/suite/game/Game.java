@@ -29,14 +29,10 @@ public class Game extends Canvas implements Runnable{
 	
 	@Override
 	public void run() {
-		
 		init();
-		
 		while(isRunning) {
-			
 			tick();
 			render();
-			
 			try {
 				Thread.sleep(20);
 			} catch(InterruptedException e) {
@@ -62,6 +58,8 @@ public class Game extends Canvas implements Runnable{
 		BufferedImage img = new BufferedImage(Lib.SCREEN_WIDTH, Lib.SCREEN_HEIGHT,
 				BufferedImage.TYPE_INT_ARGB);
 		img.createGraphics();
+		
+		
 		
 		// stop with stuff to render
 		int ww = getWidth();
