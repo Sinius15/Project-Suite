@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Level {
 
@@ -15,6 +17,7 @@ public class Level {
 	public int yScroll = 0;
 	public byte[][] tiles;
 	public byte[][] data;
+	public List<Entity> entities;
 	public Dimension screenSize;
 	public Image background;
 	private boolean staticBackground = true;
@@ -24,6 +27,7 @@ public class Level {
 		h = d.height;
 		tiles = new byte[w][h];
 		screenSize = sSize;
+		entities = new ArrayList<Entity>();
 		createImage();
 	}
 
