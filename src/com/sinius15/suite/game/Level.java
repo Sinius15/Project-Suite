@@ -33,7 +33,7 @@ public class Level {
 		this.name = name;
 		createImage();
 		
-		this.setTile(80, 80, new StraightRail(50, 12), 0);	//for testing purposes only
+		this.setTile(80, 80, new StraightRail(50, 12), 0);	//for testing purposes only   more testing
 	}
 
 	private void createImage() {
