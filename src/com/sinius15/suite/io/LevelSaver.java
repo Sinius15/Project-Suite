@@ -3,7 +3,9 @@ package com.sinius15.suite.io;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
+import com.sinius15.suite.game.Entity;
 import com.sinius15.suite.game.Level;
 
 public class LevelSaver {
@@ -16,11 +18,32 @@ public class LevelSaver {
 		writer.println("#This is a save file for the game 'Suite'. If you want to open this file, i reccommand downloading the game for free at ...");
 		writer.println("");
 		writer.println("#general:");
-		writer.println("levelName: " + l.g);
+		writer.println("levelName: \"" + l.name + "\"");
+		writer.println("levelWidht: " + l.w);
+		writer.println("levelHeight: " + l.h);
+		writer.println("levelDificulty: " + 0);		//?
+		writer.println("XScroll: " + l.xScroll);
+		writer.println("YScroll: " + l.yScroll);
+		writer.println("Background: " + "");		//?
+		writer.println("");
+		writer.println("positions: ");
+		ArrayList<Entity> ents;
+		for(int x = 0 ; x < l.w ; x++){
+			for(int y = 0 ; y < l.h ; y++){
+				ents = new ArrayList<>();
+				for(Entity e : l.entities)
+					if(e.x == x && e.y == y)
+						ents.add(e);
+				if(l.getTile(x, y).id != 0 && ents.size() == 0)
+					continue;
+				String builder = "x:" + x + "y:" + y +  "t:" + l.getTile(x,y).id  + "(" + l.getData(x, y) + ") ";
+				for(Entity e : ents)
+					builder = builder + "e:" + e.getClass().getName() + "(" + e.toSave() + ")";
+				writer.println(builder);
+			}
+		}
 		
 		writer.close();
-		
-		String s = "x:" + 10 + "y:" + 10 +  "t:" + l.getTile(10,10).id  + "(" + l.getData(10, 10) + ") " + "e:" + l.entities; 
 		
 		
 	}
@@ -33,6 +56,7 @@ public class LevelSaver {
 	/*	This is how the files are going to look:
 	 * 
 	 *  general:
+	 *  levelname
 	 * 	LevelWidht: 100
 	 *  LevelHeight: 100
 	 *  LevelDificulty: 0 

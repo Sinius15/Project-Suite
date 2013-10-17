@@ -78,7 +78,7 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public void init() {
-		level = new Level(new Dimension(Lib.SCREEN_WIDTH,Lib.SCREEN_HEIGHT),new Dimension(Lib.SCREEN_WIDTH,Lib.SCREEN_HEIGHT));		
+		level = new Level(new Dimension(Lib.SCREEN_WIDTH,Lib.SCREEN_HEIGHT),new Dimension(Lib.SCREEN_WIDTH,Lib.SCREEN_HEIGHT), "yolo");		
 	}
 
 	public static void main(String[] args) {

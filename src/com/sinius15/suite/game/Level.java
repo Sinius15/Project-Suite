@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Level {
 
+	public String name;
 	public int w;
 	public int h;
 	public int xScroll = 0;
@@ -22,13 +23,17 @@ public class Level {
 	public Image background;
 	private boolean staticBackground = true;
 	
-	public Level(Dimension d,Dimension sSize) {
+	public Level(Dimension d,Dimension sSize, String name) {
 		w = d.width;
 		h = d.height;
 		tiles = new byte[w][h];
+		data = new byte[w][h];
 		screenSize = sSize;
 		entities = new ArrayList<Entity>();
+		this.name = name;
 		createImage();
+		
+		this.setTile(80, 80, new StraightRail(50, 12), 0);	//for testing purposes only
 	}
 
 	private void createImage() {
@@ -36,6 +41,8 @@ public class Level {
 		Graphics g = background.getGraphics();
 		g.setColor(new Color(0,135,255));
 		g.fillRect(0, 0, screenSize.width, screenSize.height);
+		g.setColor(Color.black);
+		g.drawString("this should be the bg image!", 100, 100);
 	}
 
 	public void tick() {
@@ -48,6 +55,11 @@ public class Level {
 		Graphics2D g = img.createGraphics();
 		int xImg = staticBackground ? 0 : xScroll, yImg = staticBackground ? 0 : yScroll; 
 		g.drawImage(background, 0, 0, screenSize.width, screenSize.height, xImg, yImg, xImg + screenSize.width, yImg + screenSize.height, null);
+		for(int x = 0 ; x < w ; x++){
+			for(int y = 0 ; y < h ; y++){
+				g.drawImage(getTile(x, y).render(), x, y, null);//dit moet jij misschien effe doen...   (hier klopt namelijk weinig van)
+			}
+		}
 		return img;
 	}
 	

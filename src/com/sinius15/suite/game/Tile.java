@@ -8,7 +8,7 @@ public abstract class Tile {
 	public static final Tile sideTile = new SideTile((byte)0);
 	
 	
-	public final int id;
+	public final int id;  	//id = 0    =>  air
 	
 	public Tile(int id) {
 		if(tiles[id]!=null)
