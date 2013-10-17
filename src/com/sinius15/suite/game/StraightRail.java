@@ -34,7 +34,7 @@ public class StraightRail extends Rail {
 	}
 
 	@Override
-	public Image render() {
+	public Image render(Level level, int x, int y) {
 		return img;
 	}
 

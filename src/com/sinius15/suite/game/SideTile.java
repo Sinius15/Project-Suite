@@ -9,7 +9,7 @@ public class SideTile extends Tile {
 	}
 
 	@Override
-	public Image render() {
+	public Image render(Level level, int x, int y) {
 		return null;
 	}
 

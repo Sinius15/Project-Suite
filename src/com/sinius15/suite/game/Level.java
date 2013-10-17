@@ -33,7 +33,7 @@ public class Level {
 		this.name = name;
 		createImage();
 		
-		this.setTile(80, 80, new StraightRail(50, 12), 0);	//for testing purposes only   more testing
+		setTile(80, 80, new StraightRail(50, 12), 0);	//for testing purposes only   more testing
 	}
 
 	private void createImage() {
@@ -63,7 +63,7 @@ public class Level {
 		g.drawImage(background, 0, 0, screenSize.width, screenSize.height, xImg, yImg, xImg + screenSize.width, yImg + screenSize.height, null);
 		for(int x = 0 ; x < w ; x++){
 			for(int y = 0 ; y < h ; y++){
-				g.drawImage(getTile(x, y).render(), x, y, null);//dit moet jij misschien effe doen...   (hier klopt namelijk weinig van)
+				g.drawImage(getTile(x, y).render(this,x,y), x, y, null);//dit moet jij misschien effe doen...   (hier klopt namelijk weinig van)
 			}
 		}
 		return img;

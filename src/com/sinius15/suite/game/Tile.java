@@ -18,7 +18,7 @@ public abstract class Tile {
 		tiles[this.id] = this;
 	}
 	
-	public abstract Image render();
+	public abstract Image render(Level level, int x, int y);
 	
 	//Mabye to remove
 	public abstract void tick();
