@@ -7,6 +7,7 @@ public abstract class Tile {
 	public static Tile[] tiles = new Tile[255];			//all the avalable tiles
 	public static final Tile sideTile = new SideTile((byte)0);
 	
+	
 	public final int id;
 	
 	public Tile(int id) {
