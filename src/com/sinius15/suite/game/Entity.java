@@ -27,6 +27,7 @@ public abstract class Entity {
 	public abstract String toSave();
 	
 	public static Entity loadEntity(String s) {
-		
+		s.charAt(2);
+		return null;
 	}
 }

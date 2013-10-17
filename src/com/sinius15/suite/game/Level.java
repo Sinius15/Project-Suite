@@ -46,8 +46,14 @@ public class Level {
 	}
 
 	public void tick() {
-		if(true)
-			return;
+		for (int i = 0; i < entities.size(); i++) {
+			Entity e = entities.get(i);
+			if(e.removed) {
+				entities.remove(i);
+				continue;
+			}
+			e.tick();
+		}
 	}
 	
 	public BufferedImage render() {

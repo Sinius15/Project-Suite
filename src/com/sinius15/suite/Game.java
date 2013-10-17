@@ -15,6 +15,8 @@ import com.sinius15.suite.util.ArgumentsReader;
 public class Game extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
 	
+	
+	public static final int pixel = 48;
 	public boolean isRunning = false;
 	public Level level;
 	
