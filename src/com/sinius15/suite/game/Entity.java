@@ -25,4 +25,8 @@ public abstract class Entity {
 	public abstract void tick();
 	
 	public abstract String toSave();
+	
+	public static Entity loadEntity(String s) {
+		
+	}
 }

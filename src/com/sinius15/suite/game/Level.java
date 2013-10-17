@@ -15,8 +15,8 @@ public class Level {
 	public int h;
 	public int xScroll = 0;
 	public int yScroll = 0;
-	public byte[][] tiles;
-	public byte[][] data;
+	protected byte[][] tiles;
+	protected byte[][] data;
 	public List<Entity> entities;
 	public Dimension screenSize;
 	public Image background;
