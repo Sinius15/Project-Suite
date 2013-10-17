@@ -5,10 +5,11 @@ import java.awt.Image;
 public abstract class Tile {
 
 	public static Tile[] tiles = new Tile[255];
+	public static final Tile sideTile = new SideTile((byte)0);
 	
-	private final byte id;
+	public final int id;
 	
-	public Tile(byte id) {
+	public Tile(int id) {
 		if(tiles[id]!=null)
 			throw new IllegalArgumentException("Id already exists");
 		

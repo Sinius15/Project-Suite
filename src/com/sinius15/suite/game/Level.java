@@ -51,4 +51,29 @@ public class Level {
 		return img;
 	}
 	
+	public Tile getTile(int x,int y) {
+		if(x<0||y<0||x>=w||y>=h)
+			return Tile.sideTile;
+		return Tile.tiles[tiles[x][y] & 0xff];
+	}
+	
+	public int getData(int x,int y) {
+		if(x<0||y<0||x>=w||y>=h)
+			return -1;
+		return data[x][y] & 0xff;
+	}
+	
+	public void setData(int x, int y, int meta) {
+		if(x<0||y<0||x>=w||y>=h)
+			return;
+		data[x][y] = (byte)meta;
+	}
+	
+	public void setTile(int x,int y,Tile t,int meta) {
+		if(x<0||y<0||x>=w||y>=h)
+			return;
+		tiles[x][y] = (byte)t.id;
+		data[x][y] = (byte) meta;
+	}
+	
 }

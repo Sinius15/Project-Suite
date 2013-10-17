@@ -8,7 +8,7 @@ public class StraightRail extends Rail {
 	public Direction direction1;
 	public Direction direction2;
 	
-	public StraightRail(byte id,int str) {
+	public StraightRail(int id,int str) {
 		super(id);
 		strenght = str;
 	}
