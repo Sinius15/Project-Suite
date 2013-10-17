@@ -1,4 +1,4 @@
-package com.sinius15.suite.game;
+package com.sinius15.suite;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
-import com.sinius15.suite.Lib;
+import com.sinius15.suite.game.Level;
 import com.sinius15.suite.util.ArgumentsReader;
 
 public class Game extends Canvas implements Runnable{
@@ -61,7 +61,11 @@ public class Game extends Canvas implements Runnable{
 		}
 		BufferedImage img = new BufferedImage(Lib.SCREEN_WIDTH, Lib.SCREEN_HEIGHT,
 				BufferedImage.TYPE_INT_ARGB);
-		img.createGraphics();
+		Graphics g = img.createGraphics();
+		//Start rendering stuff
+		if(level!=null) {
+			g.drawImage(level.render(), 0, 0, null);
+		}
 		
 		// stop with stuff to render
 		int ww = getWidth();
@@ -75,7 +79,7 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public void init() {
-		level = new Level(new Dimension(Lib.SCREEN_WIDTH,Lib.SCREEN_HEIGHT));		
+		level = new Level(new Dimension(Lib.SCREEN_WIDTH,Lib.SCREEN_HEIGHT),new Dimension(Lib.SCREEN_WIDTH,Lib.SCREEN_HEIGHT));		
 	}
 
 	public static void main(String[] args) {
