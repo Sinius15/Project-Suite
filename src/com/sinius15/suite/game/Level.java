@@ -6,8 +6,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import com.sinius15.suite.entitys.Entity;
 import com.sinius15.suite.tiles.StraightRail;
@@ -26,15 +30,17 @@ public class Level {
 	public Dimension screenSize;
 	public Image background;
 	private boolean staticBackground = true;
+	private File backgroundFile;
+	private String stringBack = "standard";
 	
-	public Level(Dimension d,Dimension sSize, String name) {
+	public Level(Dimension d, String name,File background) {
 		w = d.width;
 		h = d.height;
 		tiles = new byte[w][h];
 		data = new byte[w][h];
-		screenSize = sSize;
 		entities = new ArrayList<Entity>();
 		this.name = name;
+		backgroundFile = background;
 		createImage();
 		
 		setTile(80, 80, new StraightRail(50, 12), 0);	//for testing purposes only   more testing
@@ -42,11 +48,20 @@ public class Level {
 
 	private void createImage() {
 		background = new BufferedImage(screenSize.width,screenSize.height,BufferedImage.TYPE_INT_ARGB);
-		Graphics g = background.getGraphics();
-		g.setColor(new Color(0,135,255));
-		g.fillRect(0, 0, screenSize.width, screenSize.height);
-		g.setColor(Color.black);
-		g.drawString("this should be the bg image!", 100, 100);
+		try {
+			if(backgroundFile==null)
+				throw new IOException("Making standard background");
+			background = ImageIO.read(backgroundFile);
+			stringBack = backgroundFile.getAbsolutePath();
+		} catch(IOException e) {
+			Graphics g = background.getGraphics();
+			g.setColor(new Color(0,135,255));
+			g.fillRect(0, 0, screenSize.width, screenSize.height);
+			g.setColor(Color.black);
+			g.drawString("this should be the bg image!", 100, 100);
+			stringBack = "standard";
+		}
+		
 	}
 
 	public void tick() {
