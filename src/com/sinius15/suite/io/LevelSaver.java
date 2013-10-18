@@ -16,7 +16,7 @@ import com.sinius15.suite.game.Level;
 public class LevelSaver {
 	
 	/*
-		hoi  dit is een test line
+		YOLO :  you only live once   just testing
 	*/
 
 	public static void saveLevel(Level l, File f) throws IOException{
