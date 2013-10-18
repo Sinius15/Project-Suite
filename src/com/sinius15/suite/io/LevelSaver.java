@@ -28,7 +28,7 @@ public class LevelSaver {
 		writer.println("levelHeight: " + l.h);					//	
 		writer.println("XScroll: " + l.xScroll);				//
 		writer.println("YScroll: " + l.yScroll);				//
-		writer.println("Background: " + l.background.);		//?			
+		//writer.println("Background: " + l.background.);		//?			
 		writer.println("");
 		writer.println("#positions: ");
 		ArrayList<Entity> ents;
