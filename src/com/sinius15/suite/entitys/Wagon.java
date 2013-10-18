@@ -7,10 +7,11 @@ import com.sinius15.suite.game.Level;
 
 public abstract class Wagon extends Entity {
 
-	List<Crate> crates = new ArrayList<Crate>();
+	List<Crate> crates;
 	
 	public Wagon(int x, int y, Level level) {
 		super(x, y, level);
+		crates = new ArrayList<Crate>();
 	}
 
 }
