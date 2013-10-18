@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sinius15.suite.tiles.StraightRail;
+
 public class Level {
 
 	public String name;

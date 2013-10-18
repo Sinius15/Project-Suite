@@ -1,4 +1,4 @@
-package com.sinius15.suite.game;
+package com.sinius15.suite.entitys;
 
 public class Crate {
 

@@ -1,4 +1,6 @@
-package com.sinius15.suite.game;
+package com.sinius15.suite.entitys;
+
+import com.sinius15.suite.game.Level;
 
 public abstract class Locomotion extends Wagon {
 

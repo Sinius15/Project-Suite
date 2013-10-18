@@ -1,10 +1,14 @@
-package com.sinius15.suite.game;
+package com.sinius15.suite.tiles;
 
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+
+import com.sinius15.suite.entitys.Train;
+import com.sinius15.suite.game.Direction;
+import com.sinius15.suite.game.Level;
 
 public class StraightRail extends Rail {
 
