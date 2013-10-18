@@ -84,9 +84,9 @@ public class YAMLFile {
 				
 				levelName[level] = key;
 				
-				if(p.length == 1){
+				if(p.length == 1)
 					continue;
-				}
+				
 				
 				if(!(p[1] == null || p[1].replaceAll(" ", "").equals(""))){
 					
@@ -127,13 +127,12 @@ public class YAMLFile {
 			String line;
 			String[] p;
 			while((line =  reader.readLine()) != null){
-				if(line.equals("")) {
+				if(line.equals(""))
 					continue;
-				}
-				if(line.startsWith("#")) {
-					continue;
-				}
 				
+				if(line.startsWith("#"))
+					continue;
+								
 				p = line.split(":", 2);
 				
 				int count = 0;
@@ -147,9 +146,9 @@ public class YAMLFile {
 				String key = p[0].replace(" ", "").replace(":", "");
 				levelName[level] = key;
 				
-				if(p.length == 1){
+				if(p.length == 1)
 					continue;
-				}
+				
 				
 				if(!(p[1] == null || p[1].replaceAll(" ", "").equals(""))){
 					
