@@ -1,6 +1,8 @@
-package com.sinius15.suite.game;
+package com.sinius15.suite.tiles;
 
 import java.awt.Image;
+
+import com.sinius15.suite.game.Level;
 
 public abstract class Tile {
 

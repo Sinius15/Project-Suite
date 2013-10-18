@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sinius15.suite.game.Direction;
-import com.sinius15.suite.game.Entity;
 import com.sinius15.suite.game.Level;
 
 public abstract class Train extends Entity {

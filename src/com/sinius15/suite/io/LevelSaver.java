@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import com.sinius15.suite.game.Entity;
+import com.sinius15.suite.entitys.Entity;
 import com.sinius15.suite.game.Level;
 
 public class LevelSaver {

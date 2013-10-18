@@ -1,7 +1,9 @@
-package com.sinius15.suite.game;
+package com.sinius15.suite.tiles;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+
+import com.sinius15.suite.game.Level;
 /**
  * Just here to return a tile if you go outside the borders
  * @author David

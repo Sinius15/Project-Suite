@@ -9,7 +9,9 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sinius15.suite.entitys.Entity;
 import com.sinius15.suite.tiles.StraightRail;
+import com.sinius15.suite.tiles.Tile;
 
 public class Level {
 
