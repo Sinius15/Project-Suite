@@ -1,5 +1,6 @@
 package com.sinius15.suite.io;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.sinius15.suite.Lib;
 import com.sinius15.suite.entitys.Entity;
 import com.sinius15.suite.game.Level;
 
@@ -58,7 +60,7 @@ public class LevelSaver {
 			if(line.substring(0, 2) != null && !line.substring(0, 2).equals("#"))
 				in.add(line);
 		scan.close();
-		Level l = new Level(d, sSize, name)
+		Level l = new Level(d, new Dimension(Lib.SCREEN_WIDTH, Lib.SCREEN_HEIGHT), name)
 		for(String s : in){
 			if(s.startsWith("levelName")){
 				
