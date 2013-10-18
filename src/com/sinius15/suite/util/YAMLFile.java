@@ -44,8 +44,9 @@ public class YAMLFile {
 		for (String path : keys) {
 			while(true){
 				path = deleteLastLevel(path);
-				if(path == null || path.equals(""))
+				if(path == null || path.equals("")) {
 					break;
+				}
 				if(data.get(path) == null){
 					data.put(path, " ");
 				}
@@ -62,14 +63,20 @@ public class YAMLFile {
 			String line;
 			String[] p;
 			while((line =  reader.readLine()) != null){
-				if(line.equals("")) continue;
-				if(line.startsWith("#")) continue;
+				if(line.equals("")) {
+					continue;
+				}
+				if(line.startsWith("#")) {
+					continue;
+				}
 				
 				p = line.split(":", 2);
 				
 				int count = 0;
 				for(int i = 0; i < p[0].length(); i++) {
-				     if(Character.isWhitespace(p[0].charAt(i))) count++;
+				     if(Character.isWhitespace(p[0].charAt(i))) {
+						count++;
+					}
 				}
 				int level = count / 4;
 				
@@ -120,14 +127,20 @@ public class YAMLFile {
 			String line;
 			String[] p;
 			while((line =  reader.readLine()) != null){
-				if(line.equals("")) continue;
-				if(line.startsWith("#")) continue;
+				if(line.equals("")) {
+					continue;
+				}
+				if(line.startsWith("#")) {
+					continue;
+				}
 				
 				p = line.split(":", 2);
 				
 				int count = 0;
 				for(int i = 0; i < p[0].length(); i++) {
-				     if(Character.isWhitespace(p[0].charAt(i))) count++;
+				     if(Character.isWhitespace(p[0].charAt(i))) {
+						count++;
+					}
 				}
 				int level = count / 4;
 				
@@ -165,7 +178,7 @@ public class YAMLFile {
 	
 	
 	@SuppressWarnings("unused")
-	private String getLevelName(String path, int level){
+	private static String getLevelName(String path, int level){
 		String[] s = path.split("\\.");
 		String builder = "";
 		for(int i = 0; i<level; i++){
@@ -176,7 +189,7 @@ public class YAMLFile {
 		return builder;
 	}
 	
-	private String getSpaceString(int amount){
+	private static String getSpaceString(int amount){
 		String builder = "";
 		for(int i = 0; i< amount; i++){
 			builder = builder + " ";
@@ -184,15 +197,14 @@ public class YAMLFile {
 		return builder;
 	}
 	
-	private int getDotAmount(String path){
+	private static int getDotAmount(String path){
 		return path.length() - path.replaceAll("\\.", "").length();
 	}
 	
-	private String deleteLastLevel(String path){
+	private static String deleteLastLevel(String path){
 		String[] s = path.split("\\.");
-		if(s.length == 1){
+		if(s.length == 1)
 			return null;
-		}
 		
 		String builder = "";
 		for(int i = 0; i <s.length-1; i++){
@@ -217,11 +229,9 @@ public class YAMLFile {
 	
 	public String getString(String path){
 		String s;
-		if((s = data.get(path)) == null){
+		if((s = data.get(path)) == null)
 			return null;
-		}else{
-			return s.replaceAll("\"", "");
-		}
+		return s.replaceAll("\"", "");
 	}
 	
 	public void addInt(String path, int value){
@@ -230,19 +240,18 @@ public class YAMLFile {
 	
 	public Integer getInt(String path){
 		String s;
-		if((s = data.get(path)) == null){
+		if((s = data.get(path)) == null)
 			return null;
-		}else{
-			int i = 0;
-			try{
-				i = Integer.valueOf(s);
-			}catch(Exception e){
-				if(showError)
-					System.err.println("YAML ERROR: You asked for a int, but there was an other object(like a string) stored.  path: " + path);
-				return null;
+		int i = 0;
+		try{
+			i = Integer.valueOf(s);
+		}catch(Exception e){
+			if(showError) {
+				System.err.println("YAML ERROR: You asked for a int, but there was an other object(like a string) stored.  path: " + path);
 			}
-			return i;
+			return null;
 		}
+		return i;
 	}
 	
 	public void addboolean(String path, boolean value){
@@ -257,8 +266,9 @@ public class YAMLFile {
 			return true;
 		if(s.equals("false"))
 			return false;
-		if(showError)
+		if(showError) {
 			System.err.println("YAML ERROR: You asked for a boolean, but there was an other object(like a string) stored.  path: " + path);
+		}
 		return null;
 			
 		
