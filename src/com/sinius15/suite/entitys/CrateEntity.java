@@ -6,6 +6,8 @@ import com.sinius15.suite.game.Level;
 
 public class CrateEntity extends Entity {
 
+	public Crate crate;
+
 	public CrateEntity(int x, int y, Level level) {
 		super(x, y, level);
 	}
