@@ -9,7 +9,6 @@ import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
-import com.sinius15.suite.Lib;
 import com.sinius15.suite.entitys.Entity;
 import com.sinius15.suite.game.Level;
 
