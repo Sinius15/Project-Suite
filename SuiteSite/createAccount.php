@@ -1,13 +1,13 @@
 <?php
 $name = $_POST["name"];
 $pass = $_POST["pass"];
-$pass_cryp = CRYPT($pass, file_get_contents('hash.txt'));
+$pass_cryp = CRYPT($pass, file_get_contents('hidden/hash.txt'));
 $mail = $_POST["mail"];
 
-$databasePass = (string)file_get_contents("pass.txt");
+$databasePass = (string)file_get_contents("hidden/pass.txt");
 
 function query ($query){
-    $con=mysqli_connect('db.sinius15.com','md311886db272678',file_get_contents("pass.txt") ,'md311886db272678');
+    $con=mysqli_connect('db.sinius15.com','md311886db272678',file_get_contents("hidden/pass.txt") ,'md311886db272678');
     if (mysqli_connect_errno($con)){
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
         return;

@@ -1,6 +1,6 @@
 <?php
 function query ($query){
-    $con=mysqli_connect("db.sinius15.com","md311886db272678",file_get_contents("pass.txt"),"md311886db272678");
+    $con=mysqli_connect("db.sinius15.com","md311886db272678",file_get_contents("hidden/pass.txt"),"md311886db272678");
     if (mysqli_connect_errno($con)){
         echo "Failed to connect to MySQL: " . mysqli_connect_error();
         return;
@@ -52,7 +52,7 @@ else if($req == 'login'){
             SELECT * 
             FROM Players
             WHERE name =  '". $_GET['name'] ."'
-            AND pass =  '". CRYPT($_GET['pass'], file_get_contents('hash.txt')) ."'
+            AND pass =  '". CRYPT($_GET['pass'], file_get_contents('hidden/hash.txt')) ."'
             )
             THEN 1 
             ELSE 0 
