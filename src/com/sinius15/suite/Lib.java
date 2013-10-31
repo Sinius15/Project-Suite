@@ -20,5 +20,5 @@ public class Lib {
 		SCREEN_HEIGHT = screenH;
 		SCREEN_WIDTH = screenW;
 	}
-	
+	//test
 }
