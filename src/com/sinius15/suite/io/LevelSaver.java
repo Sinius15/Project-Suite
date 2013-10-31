@@ -9,14 +9,13 @@ import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
-import com.sinius15.suite.Lib;
 import com.sinius15.suite.entitys.Entity;
 import com.sinius15.suite.game.Level;
 
 public class LevelSaver {
 	
 	/*
-		hoi  dit is een test line
+		YOLO :  you only live once   just testing
 	*/
 
 	public static void saveLevel(Level l, File f) throws IOException{
@@ -75,7 +74,7 @@ public class LevelSaver {
 			else if(s.startsWith("levelName: "))
 				name = s.replace("levelName: ", "").replaceAll("\"", "");
 		}
-		Level l = new Level(new Dimension(w, h), new Dimension(Lib.SCREEN_WIDTH, Lib.SCREEN_HEIGHT), name);
+		Level l = new Level(new Dimension(w, h), name, null);
 		for(String s : in){
 			if(s.startsWith("XScroll: "))
 				l.xScroll = Integer.parseInt(s.replace("XScroll: ", ""));
