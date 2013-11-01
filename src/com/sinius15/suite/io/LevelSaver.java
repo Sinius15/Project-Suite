@@ -13,10 +13,6 @@ import com.sinius15.suite.entitys.Entity;
 import com.sinius15.suite.game.Level;
 
 public class LevelSaver {
-	
-	/*
-		YOLO :  you only live once   just testing
-	*/
 
 	public static void saveLevel(Level l, File f) throws IOException{
 		if(!f.exists())

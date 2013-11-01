@@ -22,6 +22,7 @@ import com.sinius15.suite.launcher.Data;
 import com.sinius15.suite.launcher.Launcher;
 import com.sinius15.suite.launcher.MessageConsole;
 import com.sinius15.suite.launcher.OptionManager;
+import com.sinius15.suite.launcher.io.LoggingInner;
 
 public class LauncherFrame extends JFrame {
 
@@ -31,8 +32,7 @@ public class LauncherFrame extends JFrame {
 	public JPasswordField passwordField;
 	public boolean passwordFieldHadFocus = false;
 	public boolean textFieldHadFocus = false;
-	private JButton btnOptions;
-	public JButton btnPlay;
+	public JButton btnOptions, btnPlayOffline, btnPlay;
 
 	public LauncherFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,7 +51,9 @@ public class LauncherFrame extends JFrame {
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
-				Launcher.launchGameOnline();
+				if(LoggingInner.logIn(txtUsername.getText(), new String(passwordField.getPassword()), Data.launcherFrame))
+						Launcher.launchGameOnline();
+				
 			}
 		});
 		btnPlay.setBounds(581, 362, 89, 28);
@@ -113,7 +115,7 @@ public class LauncherFrame extends JFrame {
 		
 		MessageConsole mc = new MessageConsole(console);
 		
-		JButton btnPlayOffline = new JButton("Play \r\nOffline");
+		btnPlayOffline = new JButton("Play \r\nOffline");
 		btnPlayOffline.setFont(new Font("Arial", Font.PLAIN, 11));
 		btnPlayOffline.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

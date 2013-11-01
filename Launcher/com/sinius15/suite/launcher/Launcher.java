@@ -57,6 +57,7 @@ public class Launcher {
 	public static void launchGameOnline(){
 		System.out.println("Starting the game in online mode...");
 		Data.launcherFrame.btnPlay.setEnabled(false);
+		Data.launcherFrame.btnPlayOffline.setEnabled(false);
 		runThread = new Thread(startGameOnline, "Game");
 		runThread.start();
 		observer = new Thread(new Runnable() {@Override public void run() {
@@ -66,6 +67,7 @@ public class Launcher {
 			if((Integer)OptionManager.getValue("launcherVisability") == Data.LAUNCHVIS_REOPEN)
 				Data.launcherFrame.setVisible(true);	
 			System.out.println("Game stopped");	
+			Data.launcherFrame.btnPlayOffline.setEnabled(true);
 			Data.launcherFrame.btnPlay.setEnabled(true);
 			
 		}}, "Observer");
@@ -74,6 +76,7 @@ public class Launcher {
 	public static void launchGameOffline(){
 		System.out.println("Starting the game in offline mode...");
 		Data.launcherFrame.btnPlay.setEnabled(false);
+		Data.launcherFrame.btnPlayOffline.setEnabled(false);
 		runThread = new Thread(startGameOffline, "Game");
 		runThread.start();
 		observer = new Thread(new Runnable() {@Override public void run() {
@@ -83,6 +86,7 @@ public class Launcher {
 			if((Integer)OptionManager.getValue("launcherVisability") == Data.LAUNCHVIS_REOPEN)
 				Data.launcherFrame.setVisible(true);
 			System.out.println("Game stopped");
+			Data.launcherFrame.btnPlayOffline.setEnabled(true);
 			Data.launcherFrame.btnPlay.setEnabled(true);
 					
 		}}, "Observer");

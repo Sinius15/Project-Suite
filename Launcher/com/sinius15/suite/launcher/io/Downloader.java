@@ -73,7 +73,7 @@ public class Downloader {
         	   newFile.mkdirs();
         	   continue;
            }
-           System.out.println("unziping...   (" + ze.getName() + ")");   
+           System.out.println("unzipping...   (" + ze.getName() + ")");   
            newFile.createNewFile();
  
            FileOutputStream fos = new FileOutputStream(newFile);             
@@ -91,7 +91,7 @@ public class Downloader {
     
     
     public static String[] getVersionList(PrintStream status) throws IOException{
-    	URL url = new URL("http://sinius15.com/suite/?versionList");
+    	URL url = new URL("http://sinius15.com/suite/portal.php?req=versionList");
     	status.println("Downloading avalable versions...");
     	URLConnection urlConn = url.openConnection();
         BufferedInputStream is = new BufferedInputStream(urlConn.getInputStream());
@@ -102,14 +102,13 @@ public class Downloader {
         status.println("Downloading avalable versions done");
         String input = new String(b, Charset.forName("US-ASCII"));
         String[] output = input.split(",");
-        output[0] = output[0].substring(3);
         
         return output;
     }
     
     
     public static String getLatestVersion(PrintStream status) throws IOException{
-    	URL url = new URL("http://sinius15.com/suite/?latestVersion");
+    	URL url = new URL("http://sinius15.com/suite/portal.php?req=latestVersion");
     	status.println("Downloading latest version...");
     	URLConnection urlConn = url.openConnection();
         BufferedInputStream is = new BufferedInputStream(urlConn.getInputStream());
@@ -118,7 +117,7 @@ public class Downloader {
         is.read(b);
         is.close();
         status.println("Downloading latest version done");
-        return new String(b, Charset.forName("US-ASCII")).substring(3, 9);
+        return new String(b, Charset.forName("US-ASCII")).substring(0, 6);
     }
 	
 }
