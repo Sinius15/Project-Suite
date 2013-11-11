@@ -7,12 +7,13 @@
 </head>
 <body>
     <p>These are the api functions:</p>
+    [game] =>   The game you want to have. Avalable games are "suite", "chess", "maze".
     <ul>
-        <li>"portal.php?req=versionList" returns a list of all downloadable versions.</li>
-        <li>"portal.php?req=latestVersion" returns the latest avalable version.</li>
-        <li>"portal.php?req=login&name=<i>'username'</i>&pass=<i>'password'</i>"   returns true or flase, depending if the username/password combination is correct.</li>
-        <li>"portal.php?req=existsPlayer&name=<i>'username'</i>"   returns true or fase, depending if the user exists</li>
-        <li>"portal.php?req=existsEmail&mail=<i>'email address'"</i>    returns true or false, depending if the email address is used by a player.</li>
+        <li>"portal.php?game=[game]&req=versionList" returns a list of all downloadable versions.</li>
+        <li>"portal.php?game=[game]&req=latestVersion" returns the latest avalable version.</li>
+        <li>"portal.php?game=[game]&req=login&name=<i>'username'</i>&pass=<i>'password'</i>"   returns true or flase, depending if the username/password combination is correct.</li>
+        <li>"portal.php?game=[game]&req=existsPlayer&name=<i>'username'</i>"   returns true or fase, depending if the user exists</li>
+        <li>"portal.php?game=[game]&req=existsEmail&mail=<i>'email address'"</i>    returns true or false, depending if the email address is used by a player.</li>
     </ul>
 
 

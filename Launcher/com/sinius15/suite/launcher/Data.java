@@ -2,8 +2,6 @@ package com.sinius15.suite.launcher;
 
 import java.io.File;
 
-import javax.swing.DefaultComboBoxModel;
-
 import com.sinius15.suite.launcher.gui.DownlaodFrame;
 import com.sinius15.suite.launcher.gui.LauncherFrame;
 import com.sinius15.suite.launcher.gui.OptionFrame;
@@ -11,7 +9,7 @@ import com.sinius15.suite.launcher.gui.OptionFrame;
 @SuppressWarnings("unchecked")
 public class Data {
 	
-	public static final File DEFAULT_DATA_FOLDER = new File(System.getenv("APPDATA") + "\\Suite");
+	public static final File DEFAULT_DATA_FOLDER = new File(System.getenv("APPDATA") + "\\Sinius Launcher");
 	public static final File CONFIG_FILE = new File(Data.DEFAULT_DATA_FOLDER.getPath() + "\\launcherOptions.yml");
 
 	public static final int LAUNCHVIS_CLOSE = 0;
@@ -23,7 +21,7 @@ public class Data {
 	public static DownlaodFrame downloadFrame = new DownlaodFrame();
 	
 	@SuppressWarnings("rawtypes")
-	private static Option p1, p3, p4, p5, p6, p7, p8, p9, p10;
+	private static Option p1, p5, p6, p7, p8, p9, p10;
 	private static Option<String> p2;
 	
 	public static void initOptions(){
@@ -47,29 +45,6 @@ public class Data {
 			optionFrame.pathField.setText(p2.value);
 		}});
 		OptionManager.addOption(p2);
-		
-		p3 = new Option<Boolean>(Boolean.class, true, "autoUpdate", new Option.Update<Boolean>() {@Override public void run() {
-			p3.value = optionFrame.latestVersion.isSelected();
-			
-		}}, new Option.Update<Boolean>() {@Override public void run() {
-			optionFrame.latestVersion.setSelected((boolean) p3.value);
-			optionFrame.Version.setEnabled(!(boolean) p3.value);
-		}});
-		OptionManager.addOption(p3);
-		
-		p4 = new Option<String>(String.class, "-", "version", new Option.Update<String>() {	@Override public void run() {
-			p4.value = (String) optionFrame.Version.getSelectedItem();
-		}}, new Option.Update<String>() {@Override public void run() {
-			if(Launcher.versionList == null)
-				return;
-			optionFrame.Version.setModel(new DefaultComboBoxModel<String>(Launcher.versionList));
-			if(p4.value.equals("-"))
-				optionFrame.Version.setSelectedIndex(Launcher.versionList.length-1);
-			else
-				optionFrame.Version.setSelectedItem(p4.value);
-			
-		}});
-		OptionManager.addOption(p4);
 		
 		p5 = new Option<Integer>(Integer.class, LAUNCHVIS_CLOSE, "launcherVisability", new Option.Update<Integer>() {@Override public void run() {
 			p5.value = optionFrame.LauncherVisability.getSelectedIndex();

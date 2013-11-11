@@ -74,6 +74,7 @@ public class OptionManager {
 		for(Option p : options)
 			if(p.key.equals(key))
 				return p.value;
+				
 		return null;
 	}
 	

@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
 import com.sinius15.suite.launcher.Data;
@@ -25,10 +27,8 @@ public class OptionFrame extends JFrame {
 	private static final long serialVersionUID = 8733682719392396550L;
 	public JPanel contentPane;
 	public JTextField pathField;
-	public JCheckBox latestVersion;
 	public JCheckBox defaultDataFolder;
 	public JComboBox<String> LauncherVisability;
-	public JComboBox<String> Version;
 	public JButton browse;
 	public JCheckBox UserCrd;
 	public JTextField heidhtField;
@@ -37,6 +37,12 @@ public class OptionFrame extends JFrame {
 	public OptionFrame() {
 		setResizable(false);
 		setTitle("Options");
+		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e2) {
+			e2.printStackTrace();
+		}
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
@@ -47,7 +53,7 @@ public class OptionFrame extends JFrame {
 				Data.launcherFrame.requestFocus();
 			}
 		});
-		setBounds(100, 100, 498, 242);
+		setBounds(100, 100, 498, 194);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -67,7 +73,7 @@ public class OptionFrame extends JFrame {
 				Data.launcherFrame.requestFocus();
 			}
 		});
-		btnSave.setBounds(354, 179, 123, 23);
+		btnSave.setBounds(354, 131, 123, 23);
 		contentPane.add(btnSave);
 		
 		JButton btnDiscard = new JButton("Cancel");
@@ -78,11 +84,11 @@ public class OptionFrame extends JFrame {
 				Data.launcherFrame.requestFocus();
 			}
 		});
-		btnDiscard.setBounds(233, 179, 112, 23);
+		btnDiscard.setBounds(232, 131, 112, 23);
 		contentPane.add(btnDiscard);
 		
 		pathField = new JTextField();
-		pathField.setBounds(191, 39, 248, 20);
+		pathField.setBounds(191, 13, 248, 20);
 		contentPane.add(pathField);
 		pathField.setColumns(10);
 		
@@ -100,7 +106,7 @@ public class OptionFrame extends JFrame {
 				pathField.setText(path);
 			}
 		});
-		browse.setBounds(451, 38, 26, 23);
+		browse.setBounds(451, 12, 26, 23);
 		contentPane.add(browse);
 		
 		defaultDataFolder = new JCheckBox("Default data folder");
@@ -110,31 +116,17 @@ public class OptionFrame extends JFrame {
 				browse.setEnabled(!defaultDataFolder.isSelected());
 			}
 		});
-		defaultDataFolder.setBounds(10, 38, 132, 23);
+		defaultDataFolder.setBounds(10, 12, 132, 23);
 		contentPane.add(defaultDataFolder);
-		
-		Version = new JComboBox<String>();
-		Version.setModel(new DefaultComboBoxModel<String>(new String[] {"No Internet Connection..."}));
-		Version.setBounds(191, 12, 286, 20);
-		contentPane.add(Version);
 		
 		LauncherVisability = new JComboBox<String>();
 		LauncherVisability.setModel(new DefaultComboBoxModel<String>(new String[] {"Close launcher when game starts", "Hide launcher and re-open when game closes", "Keep the launcher open"}));
-		LauncherVisability.setBounds(191, 69, 286, 20);
+		LauncherVisability.setBounds(191, 43, 286, 20);
 		contentPane.add(LauncherVisability);
 		
 		JLabel lblLauncherVisability = new JLabel("  Launcher Visability");
-		lblLauncherVisability.setBounds(10, 70, 128, 18);
+		lblLauncherVisability.setBounds(10, 44, 128, 18);
 		contentPane.add(lblLauncherVisability);
-		
-		latestVersion = new JCheckBox("Use latest version");
-		latestVersion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Version.setEnabled(!latestVersion.isSelected());
-			}
-		});
-		latestVersion.setBounds(10, 10, 151, 24);
-		contentPane.add(latestVersion);
 		
 		UserCrd = new JCheckBox("Save User Credentials");
 		UserCrd.addActionListener(new ActionListener() {
@@ -151,31 +143,31 @@ public class OptionFrame extends JFrame {
 					
 			}
 		});
-		UserCrd.setBounds(10, 127, 163, 24);
+		UserCrd.setBounds(10, 101, 163, 24);
 		contentPane.add(UserCrd);
 		
 		heidhtField = new JTextField();
 		heidhtField.setText("360");
-		heidhtField.setBounds(363, 101, 114, 20);
+		heidhtField.setBounds(363, 75, 114, 20);
 		contentPane.add(heidhtField);
 		heidhtField.setColumns(10);
 		
 		widthField = new JTextField();
 		widthField.setText("720");
 		widthField.setColumns(10);
-		widthField.setBounds(191, 101, 114, 20);
+		widthField.setBounds(191, 75, 114, 20);
 		contentPane.add(widthField);
 		
 		JLabel lblScreenSize = new JLabel("  Screen size");
-		lblScreenSize.setBounds(10, 103, 77, 16);
+		lblScreenSize.setBounds(10, 77, 77, 16);
 		contentPane.add(lblScreenSize);
 		
 		JLabel lblWidht = new JLabel("Widht");
-		lblWidht.setBounds(152, 101, 77, 16);
+		lblWidht.setBounds(152, 75, 77, 16);
 		contentPane.add(lblWidht);
 		
 		JLabel lblHeight = new JLabel("Height");
-		lblHeight.setBounds(320, 103, 77, 16);
+		lblHeight.setBounds(320, 77, 77, 16);
 		contentPane.add(lblHeight);
 		
 		

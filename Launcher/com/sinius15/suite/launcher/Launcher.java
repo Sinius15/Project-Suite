@@ -1,28 +1,27 @@
 package com.sinius15.suite.launcher;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.Scanner;
 
-import javax.swing.JOptionPane;
-
-import com.sinius15.suite.launcher.io.Downloader;
+import com.sinius15.suite.launcher.games.Chess;
+import com.sinius15.suite.launcher.games.Game;
+import com.sinius15.suite.launcher.games.Maze;
+import com.sinius15.suite.launcher.games.Suite;
 
 public class Launcher {
 
-	public static String latestVersion = null;
-	public static String[] versionList = null;
+	public static Suite suite = new Suite();
+	public static Maze maze = new Maze();
+	public static Chess chess = new Chess();
 	
 	public static void main(String[] args) {
 		Data.launcherFrame.setVisible(true);
 		initOnlineStuff();
 		Data.initOptions();
 		try {
+			Data.DEFAULT_DATA_FOLDER.mkdirs();
 			OptionManager.loadOptions(Data.CONFIG_FILE);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -37,12 +36,13 @@ public class Launcher {
 		}
 	}
 	
-	public static void initOnlineStuff(){
+	public static void initOnlineStuff(){			//init all the games;
 		Thread internetThread = new Thread(new Runnable() {@Override public void run() {
 			try {
 				Data.launcherFrame.btnPlay.setEnabled(false);
-				Launcher.latestVersion = Downloader.getLatestVersion(System.out);
-				Launcher.versionList = Downloader.getVersionList(System.out);
+				suite.init();
+				maze.init();
+				chess.init();
 				Data.launcherFrame.btnPlay.setEnabled(true);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -53,109 +53,30 @@ public class Launcher {
 		internetThread.start();
 	}
 	
-	private static Thread runThread, observer;
-	public static void launchGameOnline(){
-		System.out.println("Starting the game in online mode...");
-		Data.launcherFrame.btnPlay.setEnabled(false);
-		Data.launcherFrame.btnPlayOffline.setEnabled(false);
-		runThread = new Thread(startGameOnline, "Game");
-		runThread.start();
-		observer = new Thread(new Runnable() {@Override public void run() {
-			while(true)
-				if(!runThread.isAlive())
-					break;
-			if((Integer)OptionManager.getValue("launcherVisability") == Data.LAUNCHVIS_REOPEN)
-				Data.launcherFrame.setVisible(true);	
-			System.out.println("Game stopped");	
-			Data.launcherFrame.btnPlayOffline.setEnabled(true);
-			Data.launcherFrame.btnPlay.setEnabled(true);
-			
-		}}, "Observer");
-		observer.start();
-	}
-	public static void launchGameOffline(){
-		System.out.println("Starting the game in offline mode...");
-		Data.launcherFrame.btnPlay.setEnabled(false);
-		Data.launcherFrame.btnPlayOffline.setEnabled(false);
-		runThread = new Thread(startGameOffline, "Game");
-		runThread.start();
-		observer = new Thread(new Runnable() {@Override public void run() {
-			while(true)
-				if(!runThread.isAlive())
-					break;
-			if((Integer)OptionManager.getValue("launcherVisability") == Data.LAUNCHVIS_REOPEN)
-				Data.launcherFrame.setVisible(true);
-			System.out.println("Game stopped");
-			Data.launcherFrame.btnPlayOffline.setEnabled(true);
-			Data.launcherFrame.btnPlay.setEnabled(true);
-					
-		}}, "Observer");
-		observer.start();
+	public static Game getSelectedGame(){
+		if(Data.launcherFrame.gameBox.getSelectedItem().equals(suite.getName()))
+			return suite;
+		if(Data.launcherFrame.gameBox.getSelectedItem().equals(maze.getName()))
+			return maze;
+		if(Data.launcherFrame.gameBox.getSelectedItem().equals(chess.getName()))
+			return chess;
+		return null;
 	}
 	
-	private static Runnable startGameOffline = new Runnable(){@Override public void run(){
-		Data.launcherFrame.btnPlay.setEnabled(false);
-		String dataFolder;
-		
-		if((Boolean)OptionManager.getValue("defaultDataFolder"))
-			dataFolder = Data.DEFAULT_DATA_FOLDER.getAbsolutePath();
-		else
-			dataFolder = (String) OptionManager.getValue("dataFolder");
-		String localVersion = getLocalVersion(dataFolder);
-		if(localVersion == null){
-			JOptionPane.showMessageDialog(Data.launcherFrame, "The game has never downloaded any versions before, so it can't start the game offline.");
-			return;
-		}
-		startJar(dataFolder);	
-		
-	}};
+	public static void saveGame(String name){
+		getSelectedGame().saveConfig();
+	}
 	
-	private static Runnable startGameOnline = new Runnable() {@Override public void run() {
-		 
-		String versionToStart = ((String) OptionManager.getValue("version")).substring(0, 6);
-		
-		String dataFolder;
-		
-		if((Boolean)OptionManager.getValue("defaultDataFolder"))
-			dataFolder = Data.DEFAULT_DATA_FOLDER.getAbsolutePath();
-		else
-			dataFolder = (String) OptionManager.getValue("dataFolder");
-		String localVersion = getLocalVersion(dataFolder);
-		
-		try{
-			if((Boolean) OptionManager.getValue("autoUpdate")){
-				versionToStart = latestVersion;
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("[Suite Error] - Something went wrong while checking for latest version. Maybe there is no internet connection?");
-			return;
-		}
-		if(localVersion == null || !localVersion.equals(versionToStart)){
-			System.out.println("going to download verision " + versionToStart);
-			if(!downloadReqFiles(dataFolder, versionToStart)){
-				System.err.println("[Suite Error]  -  Something went wrong while downloading the files. Maybe there is no internet connection?");
-				return;
-			}
-			try {
-				Downloader.unZip(dataFolder + "\\temp.zip", dataFolder, System.out);
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.err.println("[Suite Error] - Something went wrong while unzipping a file. maybe you have no writing permission in your selected data folder?");
-				return;
-			}
-		}
-		
-		startJar(dataFolder);
-	}};
+	public static void updateSelectedGame() {
+		getSelectedGame().update();
+	}
 	
-	private static void startJar(String dataFolder){
-		String arguments = getArguments();
+	public static void startJar(String file, String arguments){
 		System.out.println("The game arguments are: " + arguments);
 		
 		Process p = null;
 		try {
-			p = Runtime.getRuntime().exec("java -jar " + dataFolder + "\\game.jar " + arguments);
+			p = Runtime.getRuntime().exec("java -jar \"" + file + "\" " + arguments);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 			return;
@@ -204,45 +125,7 @@ public class Launcher {
 			e.printStackTrace();
 		}
 	}
-	
-	public static String getArguments(){
-		String args = 
-				"screenW=>" + OptionManager.getValue("screenWidth") + 
-				" screenH=>" + OptionManager.getValue("screenHeight");
-		
-		if((Boolean)OptionManager.getValue("defaultDataFolder"))
-			args = args + " \"dataFolder=>" + Data.DEFAULT_DATA_FOLDER.getAbsolutePath() + "\"";
-		else
-			args = args + " \"dataFolder=>" + (String) OptionManager.getValue("dataFolder") + "\"";
 
-		return args;
-	}
 	
-	public static boolean downloadReqFiles(String dataFolder, String version){
-		try {
-			if(OptionManager.getValue("version").equals("-"))
-				return false;
-			URL url = new URL("http://sinius15.com/suite/versions/"+ version + ".zip");
-			Downloader.downloadFile(url, new File(dataFolder + "\\temp.zip"), System.out);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-	
-	public static String getLocalVersion(String dataFolder){
-		File f = new File(dataFolder + "\\version.txt");
-		if(!f.exists())
-			return null;
-		try {
-			Scanner scan = new Scanner(f);
-			String out = scan.next();
-			scan.close();
-			return out;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+
 }

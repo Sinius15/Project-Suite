@@ -14,6 +14,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import com.sinius15.suite.launcher.Data;
+import com.sinius15.suite.launcher.games.Game;
 
 public class Downloader {
 
@@ -90,34 +91,29 @@ public class Downloader {
    }
     
     
-    public static String[] getVersionList(PrintStream status) throws IOException{
-    	URL url = new URL("http://sinius15.com/suite/portal.php?req=versionList");
-    	status.println("Downloading avalable versions...");
+    public static String[] getVersionList(PrintStream status, Game game) throws IOException{
+    	URL url = new URL("http://sinius15.com/launcher/portal.php?game="+game.getName()+"&&req=versionList");
     	URLConnection urlConn = url.openConnection();
         BufferedInputStream is = new BufferedInputStream(urlConn.getInputStream());
         byte[] b = new byte[1024];
         Data.downloadFrame.progressBar.setValue(0);
         is.read(b);
         is.close();
-        status.println("Downloading avalable versions done");
         String input = new String(b, Charset.forName("US-ASCII"));
         String[] output = input.split(",");
-        
         return output;
     }
     
     
-    public static String getLatestVersion(PrintStream status) throws IOException{
-    	URL url = new URL("http://sinius15.com/suite/portal.php?req=latestVersion");
-    	status.println("Downloading latest version...");
+    public static String getLatestVersion(PrintStream status, Game game) throws IOException{
+    	URL url = new URL("http://sinius15.com/launcher/portal.php?game="+game.getName()+"&&req=latestVersion");
     	URLConnection urlConn = url.openConnection();
         BufferedInputStream is = new BufferedInputStream(urlConn.getInputStream());
         byte[] b = new byte[1024];
         Data.downloadFrame.progressBar.setValue(0);
         is.read(b);
         is.close();
-        status.println("Downloading latest version done");
-        return new String(b, Charset.forName("US-ASCII")).substring(0, 6);
+        return new String(b, Charset.forName("US-ASCII"));
     }
 	
 }
